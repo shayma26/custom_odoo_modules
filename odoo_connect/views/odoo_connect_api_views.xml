@@ -12,8 +12,8 @@
         <field name="arch" type="xml">
             <form string="API">
                 <header>
-                        <button name="action_preview"
-                                class="btn-primary"
+                    <button name="action_preview"
+                            class="btn-primary"
                             string="Preview"
                             type="object"/>
                 </header>
@@ -30,9 +30,11 @@
                                 <field name="model_id" options="{'no_create': True}"/>
                                 <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"
                                        options="{'no_create': True}"
-                                       attrs="{'invisible': ['|',('report_type','=','pdf'),('method','=','delete')], 'required':['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>
-                                <field name="report_type" attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
-                                <field name="report_response_type" attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
+                                       attrs="{'invisible': ['|',('report_type','=','pdf'),('method','=','delete')], 'required': ['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>
+                                <field name="report_type"
+                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
+                                <field name="report_response_type"
+                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
                                 <field name="report_id" domain="[('model_id','=',model_id)]"
                                        options="{'no_create': True}"
                                        attrs="{'invisible': [('report_type','!=','pdf')], 'required':[('report_type', '=', 'pdf')]}"/>
@@ -51,7 +53,6 @@
             <tree string="API">
                 <field name="name"/>
                 <field name="description"/>
-                <field name="api_line_ids"/>
             </tree>
         </field>
     </record>

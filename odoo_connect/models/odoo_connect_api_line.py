@@ -16,7 +16,8 @@ class OdooConnectApiLine(models.Model):
     method = fields.Selection(
         [('get', 'GET'), ('post', 'POST'), ('put', 'PUT'), ('delete', 'DELETE'), ('report', 'REPORT')], required=True)
     model_id = fields.Many2one('ir.model', string='Model', required=True, ondelete='cascade')
-    fields_ids = fields.Many2many('ir.model.fields', help='''Select desired fields''')
+    fields_ids = fields.Many2many('ir.model.fields', help='''Selecting fields is mandatory when using POST and PUT 
+    methods and when using Excel report type in REPORT method''')
     report_id = fields.Many2one("ir.actions.report")
     report_template_name = fields.Char(related="report_id.report_name")
     report_type = fields.Selection([('excel', 'EXCEL'), ('pdf', 'PDF')])

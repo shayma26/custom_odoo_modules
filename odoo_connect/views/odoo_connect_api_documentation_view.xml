@@ -7,6 +7,7 @@
             <t t-set="delete_methods" t-value="api.api_line_ids.filtered(lambda l: l.method=='delete')"/>
             <t t-set="update_methods" t-value="api.api_line_ids.filtered(lambda l: l.method=='put')"/>
             <t t-set="report_methods" t-value="api.api_line_ids.filtered(lambda l: l.method=='report')"/>
+
             <div class="left-menu">
                 <div class="content-logo">
                     <div class="logo">
@@ -145,9 +146,7 @@
                         </h1>
                         <t t-esc="api.description"/>
                     </div>
-
                     <!-- %%%%%%%%% Authentication %%%%%%%%% -->
-
                     <h1 id="content-auth-methods">Authentication</h1>
                     <div class="overflow-hidden content-section" t-attf-id="content-login">
                                 <h2>Login</h2>
@@ -200,9 +199,7 @@
                                 <h4>Response:</h4>
                                 <t t-call="odoo_connect.auth_response_example"/>
                     </div>
-
-                    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
-
+                    <!-- %%%%%%%%% Calling Methods %%%%%%%%% -->
                     <t t-if="read_methods">
                         <t t-set="method" t-value="'get'"/>
                         <h1 id="content-read-methods">Read Records</h1>
@@ -320,7 +317,7 @@
                                 </h2>
                                 <p>
                                     <t t-esc="line.name"/>
-                                    will fetch the records using the specified id(s) from the model
+                                    fetches the records using the specified id(s) from the model
                                     <t t-esc="line.model_id.model"/>
                                     and update the following fields:
                                     <t t-foreach="line.fields_ids" t-as="field">
@@ -355,7 +352,7 @@
                                 </h2>
                                 <p>
                                     <t t-esc="line.name"/>
-                                    will fetch all the record having the specified id from the model
+                                    fetches all the record having the specified id from the model
                                     <t t-esc="line.model_id.model"/>
                                     and delete them.
                                 </p>
@@ -459,54 +456,6 @@
                             </div>
                         </t>
                     </t>
-                    <!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
-
-                    <!--                    <div class="overflow-hidden content-section" id="content-errors">-->
-                    <!--                        <h2>Errors</h2>-->
-                    <!--                        <p>-->
-                    <!--                            The Westeros API uses the following error codes:-->
-                    <!--                        </p>-->
-                    <!--                        <table>-->
-                    <!--                            <thead>-->
-                    <!--                                <tr>-->
-                    <!--                                    <th>Error Code</th>-->
-                    <!--                                    <th>Meaning</th>-->
-                    <!--                                </tr>-->
-                    <!--                            </thead>-->
-                    <!--                            <tbody>-->
-                    <!--                                <tr>-->
-                    <!--                                    <td>X000</td>-->
-                    <!--                                    <td>-->
-                    <!--                                        Some parameters are missing. This error appears when you don't pass-->
-                    <!--                                        every mandatory parameters.-->
-                    <!--                                    </td>-->
-                    <!--                                </tr>-->
-                    <!--                                <tr>-->
-                    <!--                                    <td>X001</td>-->
-                    <!--                                    <td>-->
-                    <!--                                        Unknown or unvalid <code class="higlighted">secret_key</code>. This-->
-                    <!--                                        error appears if you use an unknow API key or if your API key expired.-->
-                    <!--                                    </td>-->
-                    <!--                                </tr>-->
-                    <!--                                <tr>-->
-                    <!--                                    <td>X002</td>-->
-                    <!--                                    <td>-->
-                    <!--                                        Unvalid <code class="higlighted">secret_key</code> for this domain. This-->
-                    <!--                                        error appears if you use an API key non specified for your domain.-->
-                    <!--                                        Developper or Universal API keys doesn't have domain checker.-->
-                    <!--                                    </td>-->
-                    <!--                                </tr>-->
-                    <!--                                <tr>-->
-                    <!--                                    <td>X003</td>-->
-                    <!--                                    <td>-->
-                    <!--                                        Unknown or unvalid user <code class="higlighted">token</code>. This-->
-                    <!--                                        error appears if you use an unknow user <code class="higlighted">token-->
-                    <!--                                    </code> or if the user <code class="higlighted">token</code> expired.-->
-                    <!--                                    </td>-->
-                    <!--                                </tr>-->
-                    <!--                            </tbody>-->
-                    <!--                        </table>-->
-                    <!--                    </div>-->
                 </div>
             </div>
         </t>

@@ -2,11 +2,11 @@
 <odoo>
     <template id="auth_body_example"><pre><code class="language-json">
 {<t t-if="method == 'login'">
-        "email": "admin",
-        "password": "admin"
+        "email": user_name,
+        "password": user_password
 </t><t t-elif="method == 'reset'">
-        "old_password": "admin",
-        "new_password": "admin123"
+        "old_password": old_password,
+        "new_password": new_password
     </t>
 }
 </code></pre></template>
