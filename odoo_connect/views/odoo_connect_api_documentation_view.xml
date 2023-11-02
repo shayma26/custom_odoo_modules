@@ -213,7 +213,7 @@
                                 </h2>
                                 <p>
                                     <t t-esc="line.name"/>
-                                    will fetch all the records from the model
+                                    fetches all the records from the model
                                     <t t-esc="line.model_id.model"/>
                                     and display them using the fields:
                                     <t t-foreach="line.fields_ids" t-as="field">

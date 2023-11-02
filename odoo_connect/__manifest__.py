@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 {
     'name': 'Odoo connect',
     'summary': """
@@ -10,8 +11,8 @@
         'security/ir.model.access.csv',
 
         'data/jwt_data.xml',
-        'views/auth_jwt_validator_views.xml',
 
+        'views/auth_jwt_validator_views.xml',
         'views/odoo_connect_api_views.xml',
         'views/odoo_connect_api_menus.xml',
         'views/auth_body_example.xml',
@@ -27,7 +28,8 @@
         'web.assets_frontend':[
             'odoo_connect/static/src/css/prism.css',
             'odoo_connect/static/src/js/prism.js',
-            'odoo_connect/static/src/css/style.css',
+            'odoo_connect/static/src/js/odoo_connect.js',
+            'odoo_connect/static/src/css/style.css'
         ]
     },
     'installable': True,

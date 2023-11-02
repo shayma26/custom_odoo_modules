@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 from odoo import models
 
 
 class ApiDataXlsx(models.AbstractModel):
     _name = 'report.odoo_connect.api_data_report_xls_view'
     _inherit = 'report.report_xlsx.abstract'
+    _description = 'Xlsx report generation'
 
     def generate_xlsx_report(self, workbook, data, api_line_id):
         sheet = workbook.add_worksheet(api_line_id.description)

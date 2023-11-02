@@ -19,18 +19,18 @@
                 </header>
                 <sheet>
                     <group>
-                        <field name="name"/>
+                        <field name="name" placeholder="system_integration_api"/>
                         <field name="description"/>
                         <field name="version"/>
                         <field name="api_line_ids">
                             <tree string="API Lines" editable="bottom">
-                                <field name="name"/>
-                                <field name="description"/>
+                                <field name="name" placeholder="get_partner"/>
+                                <field name="description" placeholder="Get Partners Data"/>
                                 <field name="method"/>
                                 <field name="model_id" options="{'no_create': True}"/>
                                 <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"
                                        options="{'no_create': True}"
-                                       attrs="{'invisible': [('report_type','=','pdf')], 'required':['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>
+                                       attrs="{'invisible': ['|',('report_type','=','pdf'),('method','=','delete')], 'required':['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>
                                 <field name="report_type" attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
                                 <field name="report_response_type" attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
                                 <field name="report_id" domain="[('model_id','=',model_id)]"

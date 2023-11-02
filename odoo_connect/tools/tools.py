@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from datetime import datetime
 
 def format_data(model_obj, key, value):
@@ -24,7 +25,6 @@ def format_data(model_obj, key, value):
                     raise ValueError('Wrong value for Attribute %s' % key)
                 else:
                     formatted_item = (4, item, 0)
-                    print(formatted_item)
                     formatted_list.append(formatted_item)
         return formatted_list
     elif field.ttype == 'date':
