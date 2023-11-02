@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Please don't change indents and spaces -->
+<odoo>
+<template id="json_response_example"><pre><code class="language-json">
+{
+"jsonrpc": "2.0",
+"id": id,
+"result": {
+    "success": "true",
+    "error": "",
+    "data": <t t-if="method=='get'">[
+                {
+                <t t-foreach="line.fields_ids" t-as="field">
+                    "<t t-esc="field.name"/>": "<t t-esc="field.ttype"/>_value",
+                </t>
+                }
+    <t t-if="not is_single_request">
+                ,{
+                <t t-foreach="line.fields_ids" t-as="field">
+                    "<t t-esc="field.name"/>": "Other_<t t-esc="field.ttype"/>_value",
+                </t>
+                }
+    </t>
+    ]</t>
+    <t t-if="method=='post'">
+        {"ids":[id<t t-if="not is_single_request">1,id2</t>]}
+    </t>
+    <t t-if="method=='put' or method=='delete'">
+        {"id":id}
+    </t>
+    <t t-if="method=='report'">
+        "url"
+    </t>
+    }
+}
+</code></pre>
+</template>
+</odoo>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="payslips_report_view">
+        <t t-call="web.html_container">
+            <t t-set="total_basic" t-value="0"/>
+            <t t-set="total_gross" t-value="0"/>
+            <t t-set="total_net" t-value="0"/>
+            <t t-set="total_alw" t-value="0"/>
+            <t t-set="total_total" t-value="0"/>
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <t t-foreach="docs" t-as="i">
+                        <div>
+                            <span>Start Date:
+                                <t t-esc="start_date"/>
+                            </span> <br/>
+                            <span>End Date:
+                                <t t-esc="end_date"/>
+                            </span>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Basic</th>
+                                    <th>Gross</th>
+                                    <th>Net</th>
+                                    <th>Allowance</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+
+                                <t t-set="total" t-value="i['basic'] + i['net'] + i['gross'] + i['allow']"/>
+                            <tbody>
+                                <td>
+                                    <span t-esc="i['employee_name']"/>
+                                </td>
+                                <t t-if="total == 0">
+                                    <td colspan="5">
+                                    No payslips found
+                                    </td>
+                                </t>
+                                    <t t-else="">
+
+                                <td>
+                                    <span t-esc="i['basic']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="i['net']"/>
+                                </td>
+
+                                <td>
+                                    <span t-esc="i['gross']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="i['allow']"/>
+                                </td>
+
+                                <td>
+                                    <span t-out="total"/>
+                                </td>
+                                </t>
+                                <t t-set="total_basic" t-value="total_basic + i['basic']"/>
+                                <t t-set="total_gross" t-value="total_gross + i['gross']"/>
+                                <t t-set="total_net" t-value="total_net + i['net']"/>
+                                <t t-set="total_alw" t-value="total_alw + i['allow']"/>
+                                <t t-set="total_total" t-value="total_total + total"/>
+                            </tbody>
+
+                        </table>
+                            <p style="page-break-after:always;">   </p>
+                        </t>
+                        <p style="page-break-after:always;">   </p>
+
+                <center><h1>Total</h1></center>
+                <table class="table">
+                    <theead>
+                        <tr>
+                            <th>Total Employees</th>
+                            <th>Total Basic</th>
+                            <th>Total Gross</th>
+                            <th>Total Net</th>
+                            <th>Total Allowance</th>
+                            <th>Total</th>
+                        </tr>
+                    </theead>
+                    <tbody>
+                        <td>
+                            <span t-esc="employees"/>
+                        </td>
+                        <td>
+                            <span t-esc="total_basic"/>
+                        </td>
+                        <td>
+                            <span t-esc="total_net"/>
+                        </td>
+
+                        <td>
+                            <span t-esc="total_gross"/>
+                        </td>
+                        <td>
+                            <span t-esc="total_alw"/>
+                        </td>
+                        <td>
+                            <span t-out="total_total"/>
+                        </td>
+                    </tbody>
+                </table>
+
+                    </div>
+                </t>
+            </t>
+
+    </template>
+</odoo>

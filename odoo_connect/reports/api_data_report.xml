@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="api_data_report_xls" model="ir.actions.report">
+        <field name="name">Api Data Excel</field>
+        <field name="model">odoo.connect.api.line</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">odoo_connect.api_data_report_xls_view</field>
+        <field name="report_file">odoo_connect.api_data_report_xls_view</field>
+         <field name="binding_type">report</field>
+    </record>
+</odoo>

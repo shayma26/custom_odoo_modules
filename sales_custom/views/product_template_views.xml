@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="sales_custom_product_template_form" model="ir.ui.view">
+        <field name="name">sales.custom.product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="/form/sheet/notebook/page/group/group[@name='group_standard_price']/label"
+                   position="before">
+                    <field name="sales_margin" class="oe_inline" widget='monetary'
+                           options="{'currency_field': 'currency_id', 'field_digits': True}" string="Sales Margin"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

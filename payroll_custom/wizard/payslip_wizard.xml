@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="create_payslips_form" model="ir.ui.view">
+        <field name="name">create.payslips.wizard</field>
+        <field name="model">create.payslips</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="employee_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </group>
+                <footer>
+                    <button string="PDF File" class="btn-primary" type="object" name="create_payslips_pdf"/>
+                    <button string="Excel File" class="btn-primary" type="object" name="create_payslips_xls"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="create_payslips_wizard" model="ir.actions.act_window">
+        <field name="name">Create Payslips</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">create.payslips</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="create_payslips_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

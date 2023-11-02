@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="odoo_connect_action" model="ir.actions.act_window">
+        <field name="name">Rest API</field>
+        <field name="res_model">odoo.connect.api</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="odoo_connect_api_form" model="ir.ui.view">
+        <field name="name">odoo.connect.api.form</field>
+        <field name="model">odoo.connect.api</field>
+        <field name="arch" type="xml">
+            <form string="API">
+                <header>
+                        <button name="action_preview"
+                                class="btn-primary"
+                            string="Preview"
+                            type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="version"/>
+                        <field name="api_line_ids">
+                            <tree string="API Lines" editable="bottom">
+                                <field name="name"/>
+                                <field name="description"/>
+                                <field name="method"/>
+                                <field name="model_id" options="{'no_create': True}"/>
+                                <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"
+                                       options="{'no_create': True}"
+                                       attrs="{'invisible': [('report_type','=','pdf')], 'required':['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>
+                                <field name="report_type" attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
+                                <field name="report_response_type" attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
+                                <field name="report_id" domain="[('model_id','=',model_id)]"
+                                       options="{'no_create': True}"
+                                       attrs="{'invisible': [('report_type','!=','pdf')], 'required':[('report_type', '=', 'pdf')]}"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="odoo_connect_api_tree" model="ir.ui.view">
+        <field name="name">odoo.connect.api.tree</field>
+        <field name="model">odoo.connect.api</field>
+        <field name="arch" type="xml">
+            <tree string="API">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="api_line_ids"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="auth_body_example"><pre><code class="language-json">
+{<t t-if="method == 'login'">
+        "email": "admin",
+        "password": "admin"
+</t><t t-elif="method == 'reset'">
+        "old_password": "admin",
+        "new_password": "admin123"
+    </t>
+}
+</code></pre></template>
+</odoo>

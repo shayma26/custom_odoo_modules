@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="stock_quantity_report_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="i">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div class="header">
+                            <div class="row">
+                                <div class="col-3">
+                                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M')"/>
+                                </div>
+                                <div class="col-5 text-center">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <span t-esc="i['company']"/>
+                                        </li>
+                                        <li>
+                                            <span t-esc="i['wh_name']"/>
+                                        </li>
+
+                                        <li>
+                                            <span t-esc="i['location']"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <span>Inventory Date: <t t-esc="inv_date"/></span>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Item No</th>
+                                    <th>Description</th>
+                                    <th>Open Stock</th>
+                                    <th>Inward</th>
+                                    <th>Outward</th>
+                                    <th>Avail Stock</th>
+                                    <th>Cost Price</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <t t-set="total_items" t-value="0"/>
+                            <t t-set="total_open" t-value="0"/>
+                            <t t-set="total_inward" t-value="0"/>
+                            <t t-set="total_outward" t-value="0"/>
+                            <t t-set="total_avail" t-value="0"/>
+                            <t t-set="total_cost" t-value="0"/>
+                            <t t-set="total_value" t-value="0"/>
+                            <tbody>
+                                <tr t-foreach="i['wh_stock']" t-as="item">
+                                    <td>
+                                        <span t-esc="item['product_num']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="item['description']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="item['open_stock']"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-esc="item['inward']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="item['outward']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="item['avail_stock']"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-esc="item['cost_price']"/>
+                                    </td>
+                                    <td>
+                                        <span t-out="item['value']"/>
+                                    </td>
+                                    <t t-set="total_items" t-value="total_items + 1"/>
+                                    <t t-set="total_open" t-value="total_open + item['open_stock']"/>
+                                    <t t-set="total_inward" t-value="total_inward + item['inward']"/>
+                                    <t t-set="total_outward" t-value="total_outward + item['outward']"/>
+                                    <t t-set="total_avail" t-value="total_avail + item['avail_stock']"/>
+                                    <t t-set="total_cost" t-value="total_cost + item['cost_price']"/>
+                                    <t t-set="total_value" t-value="total_value + item['value']"/>
+
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <td>Sub Total</td>
+                                <td> <span t-esc="total_items"/>Items</td>
+                                <td> <span t-esc="total_open"/> </td>
+                                <td> <span t-esc="total_inward"/> </td>
+                                <td> <span t-esc="total_outward"/> </td>
+                                <td> <span t-esc="total_avail"/> </td>
+                                <td> <span t-esc="total_cost"/> </td>
+                                <td> <span t-esc="total_value"/> </td>
+                            </tfoot>
+                        </table>
+                        <div t-attf-class="footer o_boxed_footer">
+                            <div class="text-center">
+                                    Page:
+                                    <span class="page"/>
+                                    /
+                                    <span class="topage"/>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+
+    </template>
+</odoo>

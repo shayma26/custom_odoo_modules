@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="seq_book" model="ir.sequence">
+        <field name="name">Vehicle Booking sequence</field>
+        <field name="code">fleet.vehicle.book</field>
+        <field name="prefix">BOOK/</field>
+        <field name="padding">3</field>
+    </record>
+</odoo>

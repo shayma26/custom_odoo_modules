@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="property_report_inherit" inherit_id="estate.estate_property_offer_report_template">
+        <xpath expr="//div[@class='invoice']" position="inside">
+            <t t-out="invoice_id"/>
+            <t t-if="invoice_id != None">
+                <strong>!!! Invoice has already been created !!!</strong>
+            </t>
+            <t t-else="">
+                <strong>No invoice has been created</strong>
+            </t>
+        </xpath>
+    </template>
+</odoo>

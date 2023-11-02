@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="auth_response_example"><pre><code class="language-json">
+{
+    "jsonrpc": "2.0",
+    "id": null,
+    "result": {
+    "success": true
+    <t t-if="method == 'login'">
+    "data": {
+        "id": user_id,
+        "name": user_name
+    },
+    "token": "Bearer user_token"
+    </t>
+    }
+}
+    </code></pre></template>
+</odoo>
+
+<!-- Errors:
+ wrong parameters:
+ "result": {
+        "success": false,
+        "data": null,
+        "error": "Params error"
+    }
+wrong values:
+"result": {
+        "success": false,
+        "data": null,
+        "error": "Access Denied"
+    }
+wrong email:
+ "result": {
+        "success": false,
+        "data": null,
+        "error": "Wrong login/password"
+    }
+
+ -->

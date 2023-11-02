@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Please don't change indents and spaces -->
+<odoo>
+<template id="json_body_example"><pre>
+<code class="language-json">
+<t t-if="not is_single_request">
+{
+    "data": [
+</t>
+    {<t t-foreach="line.fields_ids" t-as="field">
+        "<t t-esc="field.name"/>": <t t-if="field.ttype == 'many2one'"><t t-esc="field.name"/></t>
+        <t t-elif="field.ttype == 'one2many'">{
+            <t t-set="fields_list" t-value="line.env[field.relation].fields_get([],['required','type'])"/>
+            <t t-foreach="fields_list" t-as="f">
+                <t t-if="f_value['required']==True">
+                    "<t t-esc="f"/>": <t t-esc="f_value['type']"/>_value,</t>
+                </t>
+            }</t>
+    <t t-elif="field.ttype == 'many2many'"> [id1,id2,...] </t>
+    <t t-elif="field.ttype == 'date'"> 30-12-2023 </t>
+    <t t-elif="field.ttype == 'datetime'"> 30-12-2023, 23:50:50 </t>
+    <t t-else=""><t t-esc="field.ttype"/>_value</t>,
+</t>
+    }
+<t t-if="not is_single_request">
+    ,{<t t-foreach="line.fields_ids" t-as="field">
+        "<t t-esc="field.name"/>": <t t-if="field.ttype == 'many2one'">Other_<t t-esc="field.name"/></t>
+        <t t-elif="field.ttype == 'one2many'">{
+            <t t-set="fields_list" t-value="line.env[field.relation].fields_get([],['required','type'])"/>
+            <t t-foreach="fields_list" t-as="f">
+                <t t-if="f_value['required']==True">
+                    "<t t-esc="f"/>": Other_<t t-esc="f_value['type']"/>_value,</t>
+                </t>
+            }</t>
+    <t t-elif="field.ttype == 'many2many'"> [id1,id2,...] </t>
+    <t t-elif="field.ttype == 'date'"> 30-12-2023 </t>
+    <t t-elif="field.ttype == 'datetime'"> 30-12-2023, 23:50:50 </t>
+    <t t-else="">Other_<t t-esc="field.ttype"/>_value</t>,
+</t>
+    }
+    ]
+}
+</t>
+</code>
+</pre></template>
+</odoo>

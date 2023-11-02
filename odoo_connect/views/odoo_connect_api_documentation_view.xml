@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="documentation" name="API documentation">
+        <t t-call="website.layout">
+            <t t-set="read_methods" t-value="api.api_line_ids.filtered(lambda l: l.method=='get')"/>
+            <t t-set="create_methods" t-value="api.api_line_ids.filtered(lambda l: l.method=='post')"/>
+            <t t-set="delete_methods" t-value="api.api_line_ids.filtered(lambda l: l.method=='delete')"/>
+            <t t-set="update_methods" t-value="api.api_line_ids.filtered(lambda l: l.method=='put')"/>
+            <t t-set="report_methods" t-value="api.api_line_ids.filtered(lambda l: l.method=='report')"/>
+            <div class="left-menu">
+                <div class="content-logo">
+                    <div class="logo">
+                        <span>Odoo Connect API Documentation</span>
+                    </div>
+                </div>
+                <div class="content-menu">
+                    <div class="content-infos">
+                        <div class="info">
+                            <b>Version:</b>
+                            <t t-esc="api.version"/>
+                        </div>
+                        <div class="info">
+                            <b>Last Updated:</b>
+                            <t t-esc="api.write_date.strftime('%d, %B %Y')"/>
+                        </div>
+                    </div>
+                    <ul class="methods-menu">
+                        <li class="scroll-to-link">
+                                <a href="#content-auth-methods">
+                                    Authentication
+                                </a>
+                            <ul>
+                                <li class="scroll-to-link">
+                                    <a t-attf-href="#content-login">
+                                        Login
+                                    </a>
+                                </li>
+                                <li class="scroll-to-link">
+                                    <a t-attf-href="#content-logout">
+                                        Log out
+                                    </a>
+                                </li>
+                                <li class="scroll-to-link">
+                                    <a t-attf-href="#content-pass">
+                                        Reset Password
+                                    </a>
+                                </li>
+
+                                </ul>
+                        </li>
+                        <t t-if="read_methods">
+                            <li class="scroll-to-link">
+                                <a href="#content-read-methods">
+                                    Read Records
+                                </a>
+                                <ul>
+                                    <t t-foreach="read_methods" t-as="line">
+                                        <li class="scroll-to-link">
+                                            <a t-attf-href="#content-{{line.name}}">
+                                                <t t-esc="line.description"/>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </li>
+                        </t>
+
+                        <t t-if="create_methods">
+                            <li class="scroll-to-link">
+                                <a href="#content-create-methods">
+                                    Create Records
+                                </a>
+                                <ul>
+                                    <t t-foreach="create_methods" t-as="line">
+                                        <li class="scroll-to-link">
+                                            <a t-attf-href="#content-{{line.name}}">
+                                                <t t-esc="line.description"/>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </li>
+                        </t>
+
+                        <t t-if="update_methods">
+                            <li class="scroll-to-link">
+                                <a href="#content-update-methods">
+                                    Update Records
+                                </a>
+                                <ul>
+                                    <t t-foreach="update_methods" t-as="line">
+                                        <li class="scroll-to-link">
+                                            <a t-attf-href="#content-{{line.name}}">
+                                                <t t-esc="line.description"/>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </li>
+                        </t>
+
+                        <t t-if="delete_methods">
+                            <li class="scroll-to-link">
+                                <a href="#content-delete-methods">
+                                    Delete Records
+                                </a>
+                                <ul>
+                                    <t t-foreach="delete_methods" t-as="line">
+                                        <li class="scroll-to-link">
+                                            <a t-attf-href="#content-{{line.name}}">
+                                                <t t-esc="line.description"/>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </li>
+                        </t>
+
+                        <t t-if="report_methods">
+                            <li class="scroll-to-link">
+                                <a href="#content-report-methods">
+                                    Reports Printing
+                                </a>
+                                <ul>
+                                    <t t-foreach="report_methods" t-as="line">
+                                        <li class="scroll-to-link">
+                                            <a t-attf-href="#content-{{line.name}}">
+                                                <t t-esc="line.description"/>
+                                            </a>
+                                        </li>
+                                    </t>
+                                </ul>
+                            </li>
+                        </t>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-page">
+                <div class="content">
+                    <div class="overflow-hidden content-section" id="content-get-started">
+                        <h1 id="title">
+                            <t t-esc="(api.name).replace('_',' ')"/>
+                        </h1>
+                        <t t-esc="api.description"/>
+                    </div>
+
+                    <!-- %%%%%%%%% Authentication %%%%%%%%% -->
+
+                    <h1 id="content-auth-methods">Authentication</h1>
+                    <div class="overflow-hidden content-section" t-attf-id="content-login">
+                                <h2>Login</h2>
+                                <t t-set="method" t-value="'login'"/>
+                                <h4>Request:</h4>
+                                <div class="request">
+                                    <pre>
+                                        POST&#160;<code class="language-markup"><t
+                                                t-esc="host_url"/>api/login
+                                        </code>
+                                    </pre>
+                                </div>
+                                <h4>Body:</h4>
+                                <t t-call="odoo_connect.auth_body_example"/>
+                                <br/>
+                                <h4>Response:</h4>
+                                <t t-call="odoo_connect.auth_response_example"/>
+                    </div>
+                    <div class="overflow-hidden content-section" t-attf-id="content-logout">
+                                <h2>Log Out</h2>
+                                <t t-set="method" t-value="'logout'"/>
+                                <t t-set="is_single_request" t-value="True"/>
+                                <h4>Request:</h4>
+                                <div class="request">
+                                    <pre>
+                                        POST&#160;<code class="language-markup"><t
+                                                t-esc="host_url"/>api/logout
+                                        </code>
+                                    </pre>
+                                </div>
+                                <br/>
+                                <h4>Response:</h4>
+                                <t t-call="odoo_connect.auth_response_example"/>
+                    </div>
+                    <div class="overflow-hidden content-section" t-attf-id="content-pass">
+                                <t t-set="method" t-value="'reset'"/>
+                                <h2>Reset Password</h2>
+                                <t t-set="is_single_request" t-value="True"/>
+                                <h4>Request:</h4>
+                                <div class="request">
+                                    <pre>
+                                        POST&#160;<code class="language-markup"><t
+                                                t-esc="host_url"/>reset/password
+                                        </code>
+                                    </pre>
+                                </div>
+                                <h4>Body:</h4>
+                                <t t-call="odoo_connect.auth_body_example"/>
+                                <br/>
+                                <h4>Response:</h4>
+                                <t t-call="odoo_connect.auth_response_example"/>
+                    </div>
+
+                    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+
+                    <t t-if="read_methods">
+                        <t t-set="method" t-value="'get'"/>
+                        <h1 id="content-read-methods">Read Records</h1>
+                        <t t-foreach="read_methods" t-as="line">
+                            <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
+                                <h2>
+                                    <t t-esc="line.description"/>
+                                </h2>
+                                <p>
+                                    <t t-esc="line.name"/>
+                                    will fetch all the records from the model
+                                    <t t-esc="line.model_id.model"/>
+                                    and display them using the fields:
+                                    <t t-foreach="line.fields_ids" t-as="field">
+                                        <t t-esc="field.name"/>,
+                                    </t>
+                                </p>
+                                <h3>Read Single Record:</h3>
+                                <t t-set="is_single_request" t-value="True"/>
+                                <h4>Request:</h4>
+                                <div class="request">
+                                    <pre>
+                                        GET&#160;<code class="language-markup"><t
+                                                t-esc="host_url"/>api/<t
+                                                    t-esc="api.name"/>/<t
+                                                    t-esc="line.name"/>/{int:id}
+                                        </code>
+                                    </pre>
+                                </div>
+                                <br/>
+                                <h4>Response:</h4>
+                                <t t-call="odoo_connect.json_response_example"/>
+
+                                <h3>Read List Records:</h3>
+                                <t t-set="is_single_request" t-value="False"/>
+                                <h4>Request:</h4>
+                                <div>
+                                    <pre>
+                                        GET&#160;<code class="language-markup">
+                                            <t t-esc="host_url"/>api/<t
+                                                    t-esc="api.name"/>/<t
+                                                    t-esc="line.name"/>
+                                        </code>
+                                    </pre>
+                                </div>
+                                <h4>Response:</h4>
+                                <t t-call="odoo_connect.json_response_example"/>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="create_methods">
+                        <t t-set="method" t-value="'post'"/>
+                        <h1 id="content-create-methods">Create Records</h1>
+                        <t t-foreach="create_methods" t-as="line">
+                            <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
+                                <h2>
+                                    <t t-esc="line.description"/>
+                                </h2>
+                                <p>
+                                    <t t-esc="line.name"/>
+                                    will create new record(s) for the model
+                                    <t t-esc="line.model_id.model"/>
+                                    after providing
+                                    these fields' values in the body:
+                                    <t t-foreach="line.fields_ids" t-as="field">
+                                        <t t-esc="field.name"/>,
+                                    </t>
+                                </p>
+                                <h3>Create Single Record:</h3>
+                                <t t-set="is_single_request" t-value="True"/>
+                                <h4>Request:</h4>
+                                <div class="request">
+                                    <pre>
+                                        POST&#160;<code class="language-markup"><t
+                                                t-esc="host_url"/>api/<t
+                                                    t-esc="api.name"/>/<t
+                                                    t-esc="line.name"/>
+                                        </code>
+                                    </pre>
+                                </div>
+                                <h4>Body:</h4>
+                                <t t-call="odoo_connect.json_body_example"/>
+                                <br/>
+                                <h4>Response:</h4>
+                                <t t-call="odoo_connect.json_response_example"/>
+
+                                <h3>Create List Records:</h3>
+                                <t t-set="is_single_request" t-value="False"/>
+                                <h4>Request:</h4>
+                                <div>
+                                    <pre>
+                                        POST&#160;<code class="language-markup">
+                                            <t t-esc="host_url"/>api/<t
+                                                    t-esc="api.name"/>/<t
+                                                    t-esc="line.name"/>
+                                        </code>
+                                    </pre>
+                                </div>
+                                <h4>Body:</h4>
+                                <t t-call="odoo_connect.json_body_example"/>
+                                <br/>
+                                <h4>Response:</h4>
+                                <t t-call="odoo_connect.json_response_example"/>
+
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="update_methods">
+                        <t t-set="method" t-value="'put'"/>
+                        <h1 id="content-update-methods">Update Records</h1>
+                        <t t-foreach="update_methods" t-as="line">
+                            <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
+                                <h2>
+                                    <t t-esc="line.description"/>
+                                </h2>
+                                <p>
+                                    <t t-esc="line.name"/>
+                                    will fetch the records using the specified id(s) from the model
+                                    <t t-esc="line.model_id.model"/>
+                                    and update the following fields:
+                                    <t t-foreach="line.fields_ids" t-as="field">
+                                        <t t-esc="field.name"/>,
+                                    </t>
+                                </p>
+                                <h4>Request:</h4>
+                                <div class="request">
+                                    <pre>
+                                        PUT&#160;<code class="language-markup"><t
+                                                t-esc="host_url"/>api/<t
+                                                    t-esc="api.name"/>/<t
+                                                    t-esc="line.name"/>/{int:id}
+                                        </code>
+                                    </pre>
+                                </div>
+                                <h4>Body:</h4>
+                                <t t-call="odoo_connect.json_body_example"/>
+                                <br/>
+                                <h4>Response:</h4>
+                                <t t-call="odoo_connect.json_response_example"/>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="delete_methods">
+                        <t t-set="method" t-value="'delete'"/>
+                        <h1 id="content-delete-methods">Delete Records</h1>
+                        <t t-foreach="delete_methods" t-as="line">
+                            <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
+                                <h2>
+                                    <t t-esc="line.description"/>
+                                </h2>
+                                <p>
+                                    <t t-esc="line.name"/>
+                                    will fetch all the record having the specified id from the model
+                                    <t t-esc="line.model_id.model"/>
+                                    and delete them.
+                                </p>
+                                <h4>Request:</h4>
+                                <div class="request">
+                                    <pre>
+                                        DELETE&#160;<code class="language-markup"><t
+                                                t-esc="host_url"/>api/<t
+                                                    t-esc="api.name"/>/<t
+                                                    t-esc="line.name"/>/{int:id}
+                                        </code>
+                                    </pre>
+                                </div>
+                                <br/>
+                                <h4>Response:</h4>
+                                <t t-call="odoo_connect.json_response_example"/>
+                            </div>
+                        </t>
+                    </t>
+                    <t t-if="report_methods">
+                        <t t-set="method" t-value="'report'"/>
+                        <h1 id="content-report-methods">Reports Printing</h1>
+                        <t t-foreach="report_methods" t-as="line">
+                            <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
+                                <h2>
+                                    <t t-esc="line.description"/>
+                                </h2>
+
+                                <t t-if="line.report_type == 'excel'">
+                                    <t t-set="is_single_request" t-value="True"/>
+                                    <p>
+                                        <t t-esc="line.name"/>
+                                        will return the Excel <t t-if="line.report_response_type == 'file'">file</t> <t t-else="">URL</t> that contains all the records from the model
+                                        <t t-esc="line.model_id.model"/>
+                                        and display them using the fields:
+                                        <t t-foreach="line.fields_ids" t-as="field">
+                                            <t t-esc="field.name"/>,
+                                        </t>
+                                    </p>
+                                    <h4>Request:</h4>
+                                    <div class="request">
+                                        <pre>
+                                            GET&#160;<code class="language-markup"><t
+                                                    t-esc="host_url"/>api/report<t t-if="line.report_response_type == 'file'">_file</t>/<t
+                                                t-esc="api.name"/>/<t
+                                                        t-esc="line.name"/>
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <br/>
+                                    <h4>Response:</h4>
+                                    <t t-if="line.report_response_type == 'file'"><p>Excel file</p></t>
+                                    <t t-else=""><t t-call="odoo_connect.json_response_example"/></t>
+
+                                </t>
+
+                                <t t-if="line.report_type == 'pdf'">
+                                    <p>
+                                        <t t-esc="line.name"/>
+                                        will return the PDF <t t-if="line.report_response_type == 'file'">file</t><t t-else="">URL</t> that contains the
+                                        <t t-esc="line.report_template_name"/>
+                                        reports
+                                        of
+                                        <t t-esc="line.model_id.model"/>
+                                        model
+                                    </p>
+                                    <h3>Get Single Report:</h3>
+                                    <t t-set="is_single_request" t-value="True"/>
+                                    <h4>Request:</h4>
+                                    <div class="request">
+                                        <pre>
+                                            GET&#160;<code class="language-markup"><t
+                                                    t-esc="host_url"/>api/report<t t-if="line.report_response_type == 'file'">_file</t>/<t
+                                                        t-esc="api.name"/>/<t
+                                                        t-esc="line.name"/>/{int:id}
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <br/>
+                                    <h4>Response:</h4>
+                                    <t t-if="line.report_response_type == 'file'"><p>PDF file</p></t>
+                                    <t t-else=""><t t-call="odoo_connect.json_response_example"/></t>
+
+                                    <h3>Get List Reports:</h3>
+                                    <t t-set="is_single_request" t-value="False"/>
+                                    <h4>Request:</h4>
+                                    <div>
+                                        <pre>
+                                            GET&#160;<code class="language-markup">
+                                                <t t-esc="host_url"/>api/report<t t-if="line.report_response_type == 'file'">_file</t>/<t
+                                                        t-esc="api.name"/>/<t
+                                                        t-esc="line.name"/>/{comma_separated_ids}
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <h4>Response:</h4>
+                                    <t t-if="line.report_response_type == 'file'"><p>PDF file</p></t>
+                                    <t t-else=""><t t-call="odoo_connect.json_response_example"/></t>
+                                </t>
+
+                            </div>
+                        </t>
+                    </t>
+                    <!-- <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< -->
+
+                    <!--                    <div class="overflow-hidden content-section" id="content-errors">-->
+                    <!--                        <h2>Errors</h2>-->
+                    <!--                        <p>-->
+                    <!--                            The Westeros API uses the following error codes:-->
+                    <!--                        </p>-->
+                    <!--                        <table>-->
+                    <!--                            <thead>-->
+                    <!--                                <tr>-->
+                    <!--                                    <th>Error Code</th>-->
+                    <!--                                    <th>Meaning</th>-->
+                    <!--                                </tr>-->
+                    <!--                            </thead>-->
+                    <!--                            <tbody>-->
+                    <!--                                <tr>-->
+                    <!--                                    <td>X000</td>-->
+                    <!--                                    <td>-->
+                    <!--                                        Some parameters are missing. This error appears when you don't pass-->
+                    <!--                                        every mandatory parameters.-->
+                    <!--                                    </td>-->
+                    <!--                                </tr>-->
+                    <!--                                <tr>-->
+                    <!--                                    <td>X001</td>-->
+                    <!--                                    <td>-->
+                    <!--                                        Unknown or unvalid <code class="higlighted">secret_key</code>. This-->
+                    <!--                                        error appears if you use an unknow API key or if your API key expired.-->
+                    <!--                                    </td>-->
+                    <!--                                </tr>-->
+                    <!--                                <tr>-->
+                    <!--                                    <td>X002</td>-->
+                    <!--                                    <td>-->
+                    <!--                                        Unvalid <code class="higlighted">secret_key</code> for this domain. This-->
+                    <!--                                        error appears if you use an API key non specified for your domain.-->
+                    <!--                                        Developper or Universal API keys doesn't have domain checker.-->
+                    <!--                                    </td>-->
+                    <!--                                </tr>-->
+                    <!--                                <tr>-->
+                    <!--                                    <td>X003</td>-->
+                    <!--                                    <td>-->
+                    <!--                                        Unknown or unvalid user <code class="higlighted">token</code>. This-->
+                    <!--                                        error appears if you use an unknow user <code class="higlighted">token-->
+                    <!--                                    </code> or if the user <code class="higlighted">token</code> expired.-->
+                    <!--                                    </td>-->
+                    <!--                                </tr>-->
+                    <!--                            </tbody>-->
+                    <!--                        </table>-->
+                    <!--                    </div>-->
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

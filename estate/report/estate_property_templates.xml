@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="estate_property_report_template">
+        <t t-set="properties" t-value="user.mapped('property_ids')"/>
+        <t t-foreach="properties" t-as="property">
+            <hr/>
+            <h1 t-field="property.name"/>
+            <div>
+                <strong>Expected Price: </strong>
+                <span t-field="property.expected_price"/>
+            </div>
+            <div>
+                <strong>Status: </strong>
+                <span t-field="property.state"/>
+            </div>
+                        <t t-if="property.state == 'new'">
+                            <h2>No offers have been made yet :(</h2>
+                        </t>
+                        <t t-else="">
+                            <t t-call="estate.estate_property_offer_report_template"/>
+                        </t>
+        </t>
+    </template>
+</odoo>

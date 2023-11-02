@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="fleet_vehicle_book_action" model="ir.actions.act_window">
+        <field name="name">BOOK</field>
+        <field name="res_model">fleet.vehicle.book</field>
+        <field name="view_mode">tree,form,activity,calendar</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to add a new vehicle booking.
+            </p>
+        </field>
+
+    </record>
+
+    <record id="fleet_vehicle_book_list" model="ir.ui.view">
+        <field name="name">fleet.vehicle.book.tree</field>
+        <field name="model">fleet.vehicle.book</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="state == 'canceled'">
+                <field name="vehicle_model_id"/>
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="customer_id" />
+                <field name="total_price" />
+                <field name="state" widget="badge" decoration-success="state == 'done'" decoration-info="state == 'draft'" decoration-danger="state == 'canceled'"/>
+                <button string="Cancel" type="object" name="action_cancel_car" class="btn btn-danger" attrs="{'invisible': ['|',('state', '=', 'done'),('state', '=', 'canceled')]}" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_book_form" model="ir.ui.view">
+        <field name="name">fleet.vehicle.book.form</field>
+        <field name="model">fleet.vehicle.book</field>
+        <field name="arch" type="xml">
+            <form string="BOOK">
+                <header>
+                    <button string="Confirm"
+                        class="btn btn-primary"
+                        type="object"
+                        name="action_book_confirm"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"
+                        />
+                    <button string="In Progress"
+                        class="btn btn-primary"
+                        type="object"
+                        name="action_book_open"
+                            attrs="{'invisible': [('state', '!=', 'confirm')]}"
+                        />
+                    <button string="Create Invoice"
+                        class="btn btn-primary"
+                        type="object"
+                        name="action_book_invoice"
+                            attrs="{'invisible': [('state', '!=', 'open')]}"
+                        />
+                    <button string="Done"
+                        class="btn btn-primary"
+                        type="object"
+                        name="action_book_done"
+                            attrs="{'invisible': [('state', '!=', 'invoice')]}"
+                        />
+                    <button string="Cancel"
+                        class="btn btn-danger"
+                        type="object"
+                        name="action_cancel_car"
+                            attrs="{'invisible': ['|',('state', '=', 'done'),('state','=','canceled')]}"
+                        />
+
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,open,invoice,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_invoice"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                attrs="{'invisible': [('state', '!=', 'invoice'),('state', '!=', 'done')]}">
+                            <field name="invoice_id"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="seq" readonly="1"/></h1>
+                    </div>
+                    <group col="2">
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="vehicle_id"/>
+                            <field name="driver"/>
+                            <field name="driver_id" attrs="{'invisible':[('driver','=',False)]}"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="booking_date"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="deposit"/>
+                            <field name="rent_type"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Rent Charges">
+                            <group>
+                                 <field name="nb_days" string="Days : " attrs="{'invisible':[('rent_type', '!=', 'day')]}"/>
+                                <field name="vehicle_rent_day" string="Rent Per Day" attrs="{'invisible':[('rent_type', '!=', 'day')]}"/>
+
+                                <field name="nb_hours" string="Hours : " attrs="{'invisible':[('rent_type', '!=', 'hour')]}"/>
+                                <field name="vehicle_rent_hour" string="Rent Per Hour" attrs="{'invisible':[('rent_type', '!=', 'hour')]}"/>
+
+                                <field name="nb_km" string="Enter Km" attrs="{'invisible':[('rent_type', '!=', 'km')]}"/>
+                                <field name="vehicle_rent_km" string="Rent Per Km" attrs="{'invisible':[('rent_type', '!=', 'km')]}"/>
+
+                            </group>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total_price"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_book_activity" model="ir.ui.view">
+        <field name="model">fleet.vehicle.book</field>
+        <field name="name">fleet.vehicle.book.activity</field>
+        <field name="arch" type="xml">
+            <activity string="Bookings">
+                <field name="customer_id"/>
+                <templates>
+                    <div t-name="activity-box">
+                        <div>
+                            <field name="vehicle_id" display="full"/>
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_book_search" model="ir.ui.view">
+        <field name="name">fleet.vehicle.book.search</field>
+        <field name="model">fleet.vehicle.book</field>
+        <field name="arch" type="xml">
+        <search string="Vehicles Search">
+            <field name="vehicle_model_id"/>
+            <field name="state"/>
+            <field name="booking_date"/>
+            <field name="start_date"/>
+            <field name="end_date"/>
+            <field name="customer_id" />
+            <separator/>
+            <filter string="Deco Customer" name="customer_filter" domain="[('customer_id.name', 'like','Deco' )]"/>
+            <filter string="Opel Vehicle" name="vehicle_model_filter" domain="[('vehicle_id.name', 'like', 'Opel')]"/>
+            <group expand="1" string="Group By"><!-- If set to false categories or filters with 0 records will be hidden -->
+                <filter string="State" name="state" context="{'group_by':'state'}"/>
+                <filter string="Date" name="booking_date" context="{'group_by':'booking_date'}"/>
+                <filter string="Vehicle" name="vehicle_model_id" context="{'group_by':'vehicle_model_id'}"/>
+            </group>
+        </search>
+        </field>
+    </record>
+
+    <record id="fleet_vehicle_book_calendar" model="ir.ui.view">
+        <field name="name">fleet.vehicle.book.calendar</field>
+        <field name="model">fleet.vehicle.book</field>
+        <field name="arch" type="xml">
+            <calendar string="Calendar" mode="month" date_start="start_date" date_stop="end_date" color="state" event_open_popup="true" >
+                <field name="customer_id" filters="1"/>
+                <field name="vehicle_id" filters="1"/>
+                <field name="booking_date"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+            </calendar>
+        </field>
+    </record>
+
+</odoo>

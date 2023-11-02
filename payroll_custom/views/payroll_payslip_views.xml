@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="hr_payroll_reporting"
+              name="Reporting"
+              parent="om_hr_payroll.menu_hr_payroll_root"
+              action="create_payslips_wizard"
+              sequence="15"
+    />
+</odoo>

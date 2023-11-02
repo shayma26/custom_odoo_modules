@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sales_custom_view_order_product_pivot" model="ir.ui.view">
+        <field name="name">sales.custom.report.pivot</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_id']" position="replace">
+                <field name="salesman_ids" type="row"/>
+            </xpath>
+            <xpath expr="//field[@name='date']" position="replace">
+                <field name="date" interval="month" type="col"/>
+            </xpath>
+            <xpath expr="//field[@name='price_subtotal']" position="replace">
+                <field name="price_total_per_salesman" type="measure"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

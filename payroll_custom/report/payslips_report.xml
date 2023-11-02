@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+     <record id="payslips_report" model="ir.actions.report">
+        <field name="name">Payslips</field>
+        <field name="model">create.payslips</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">payroll_custom.payslips_report_view</field>
+        <field name="report_file">payroll_custom.payslips_report_view</field>
+        <field name="print_report_name">'Payslips - %s' % (object.name).replace('/','')</field>
+         <field name="binding_type">report</field>
+    </record>
+
+    <record id="payslips_report_xls" model="ir.actions.report">
+        <field name="name">Payslips Excel</field>
+        <field name="model">create.payslips</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">payroll_custom.payslips_report_xls_view</field>
+        <field name="report_file">payroll_custom.payslips_report_xls_view</field>
+         <field name="binding_type">report</field>
+    </record>
+
+</odoo>
