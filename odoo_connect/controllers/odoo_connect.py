@@ -1,8 +1,49 @@
+# -*- coding: utf-8 -*-
 from odoo import http
 from odoo.http import request
 
 
 class RestAPICustomController(http.Controller):
+
+    @http.route(['/api/report_file/<api_name>/<name>/<record_id>', '/api/report_file/<api_name>/<name>'],
+                auth='jwt_user_auth', methods=['GET'])
+    def get_report_file(self, api_name, name, record_id=None):
+        partner_id = request.jwt_partner_id
+        user = request.env['res.users'].search([('partner_id', '=', partner_id)])
+        res = {
+            'success': False,
+            'error': '',
+            'data': None
+        }
+        try:
+            get_api = request.env['odoo.connect.api'].search([('name', '=', api_name)])
+            result = get_api.api_line_ids.filtered(
+                lambda rec: rec.name == name and rec.method == 'report' and rec.report_response_type == 'file')
+            if record_id:
+                ids = [int(i) for i in record_id.split(',')]
+            else:
+                ids = ""
+        except Exception as e:
+            res['error'] = 'Error in API: %s' % str(e)
+            return res
+        if not result:
+            res['error'] = 'API does not exist'
+            return res
+        try:
+            report = result.api_action(method='report', user=user, record_id=ids)
+        except Exception as e:
+            res['error'] = 'Error accrued when calling Api %s' % str(e)
+            return res
+        if result.report_type == 'pdf':
+            pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', len(report))]
+            return request.make_response(report, headers=pdfhttpheaders)
+        elif result.report_type == 'excel':
+            xlsxhttpheaders = [
+                ('Content-Type', 'application/vnd.openxmlformats-'
+                                 'officedocument.spreadsheetml.sheet'),
+                ('Content-Length', len(report)),
+            ]
+            return request.make_response(report, headers=xlsxhttpheaders)
 
     @http.route(['/api/<api_name>/<name>', '/api/<api_name>/<name>/<int:record_id>'], auth='jwt_user_auth', type='json')
     def odoo_connect_apis(self, api_name, name, record_id=None):
@@ -38,45 +79,6 @@ class RestAPICustomController(http.Controller):
             return res
         res.update({'success': True, 'data': data})
         return res
-
-    @http.route(['/api/report_file/<api_name><name>/<record_id>', '/api/report_file/<api_name>/<name>'],
-                auth='jwt_user_auth',  methods=['GET'])
-    def get_report(self, api_name, name, record_id=None):
-        partner_id = request.jwt_partner_id
-        user = request.env['res.users'].search([('partner_id', '=', partner_id)])
-        res = {
-            'success': False,
-            'error': '',
-            'data': None
-        }
-        try:
-            get_api = request.env['odoo.connect.api'].search([('name', '=', api_name)])
-            result = get_api.api_line_ids.filtered(lambda rec: rec.name == name and rec.method == 'report' and rec.report_response_type == 'file')
-            if record_id:
-                ids = [int(i) for i in record_id.split(',')]
-            else:
-                ids = ""
-        except Exception as e:
-            res['error'] = 'Error in API: %s' % str(e)
-            return res
-        if not result:
-            res['error'] = 'API does not exist'
-            return res
-        try:
-            report = result.api_action(method='report', user=user, record_id=ids)
-        except Exception as e:
-            res['error'] = 'Error accrued when calling Api %s' % str(e)
-            return res
-        if result.report_type == 'pdf':
-            pdfhttpheaders = [('Content-Type', 'application/pdf'), ('Content-Length', len(report))]
-            return request.make_response(report, headers=pdfhttpheaders)
-        elif result.report_type == 'excel':
-            xlsxhttpheaders = [
-                ('Content-Type', 'application/vnd.openxmlformats-'
-                                 'officedocument.spreadsheetml.sheet'),
-                ('Content-Length', len(report)),
-            ]
-            return request.make_response(report, headers=xlsxhttpheaders)
 
     @http.route(['/api/report/<api_name>/<name>/<record_id>', '/api/report/<api_name>/<name>'],
                 auth='jwt_user_auth', methods=['GET'], type='json')
@@ -127,7 +129,7 @@ class RestAPICustomController(http.Controller):
             "host_url": request.httprequest.host_url
         })
 
-    @http.route('/report/xlsx/<api_name>/<name>', auth='jwt_user_auth', methods=['GET'])
+    @http.route('/report_xlsx/<api_name>/<name>', auth='jwt_user_auth', methods=['GET'])
     def get_excel(self, api_name, name):
         report_name = 'odoo_connect.api_data_report_xls'
         report = request.env['ir.actions.report']._get_report_from_name(report_name)
