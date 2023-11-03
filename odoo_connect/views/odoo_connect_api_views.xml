@@ -19,13 +19,13 @@
                 </header>
                 <sheet>
                     <group>
-                        <field name="name" placeholder="system_integration_api"/>
+                        <field name="name" placeholder='e.g: "system_integration_api"'/>
                         <field name="description"/>
                         <field name="version"/>
                         <field name="api_line_ids">
                             <tree string="API Lines" editable="bottom">
-                                <field name="name" placeholder="get_partner"/>
-                                <field name="description" placeholder="Get Partners Data"/>
+                                <field name="name" placeholder='e.g: "get_partner"'/>
+                                <field name="description" placeholder='e.g: "Get Partners Data"'/>
                                 <field name="method"/>
                                 <field name="model_id" options="{'no_create': True}"/>
                                 <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"
