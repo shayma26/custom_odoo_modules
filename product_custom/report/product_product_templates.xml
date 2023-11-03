@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="report_with_qrcode2x7" inherit_id="product.report_simple_label2x7">
+        <xpath expr="//td/div/div[@class='o_label_data']/div[@class='text-center o_label_left_column']" position="inside">
+            <img style="display:block;"
+                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', product.qr_code_str, 50, 50)"/>
+        </xpath>
+    </template>
+
+    <template id="report_with_qrcode4x7" inherit_id="product.report_simple_label4x7">
+        <xpath expr="//td/div/div[@class='text-center o_label_small_barcode']" position="inside">
+            <img style="display:block;align:center;"
+                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', product.qr_code_str, 45, 45)"/>
+        </xpath>
+    </template>
+
+    <template id="report_with_qrcode4x12" inherit_id="product.report_simple_label4x12">
+        <xpath expr="//div/div[@class='o_label_name']" position="before">
+            <div>
+                    <img style="float: right;top: 0;"
+                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', product.qr_code_str, 40, 40)"/>
+                </div>
+        </xpath>
+    </template>
+</odoo>
