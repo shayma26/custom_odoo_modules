@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="report_producttemplateqrcode">
+        <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <t t-foreach="products" t-as="product">
+                        <div style="margin:1.7em;padding:1em;border: 1px solid black;display: inline-block;text-align: -webkit-center;">
+                            <t t-if="product.company_id.name">
+                                <h1>
+                                    <t t-out="product.company_id.name"/>
+                                </h1>
+                            </t>
+                            <t t-else="">
+                                <h1>
+                                    <t t-out="env.company.name"/>
+                                </h1>
+                            </t>
+                            <t t-if="product.website_url">
+                            <img style="display:block;margin:1.5em;"
+                                 t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', product.website_url, 100, 100)"/>
+                            </t>
+                            <span t-out="product.name"/>
+                            <br/>
+                        </div>
+                        </t>
+                    </div>
+            </t>
+        </t>
+
+    </template>
+
+</odoo>

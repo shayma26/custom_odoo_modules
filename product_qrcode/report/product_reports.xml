@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="report_product_template_qrcode" model="ir.actions.report">
+            <field name="name">Product QrCode (PDF)</field>
+            <field name="model">product.template</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">product_qrcode.report_producttemplateqrcode</field>
+            <field name="report_file">product_qrcode.report_producttemplateqrcode</field>
+            <field name="paperformat_id" ref="product.paperformat_label_sheet"/>
+            <field name="print_report_name">'Products QrCode - %s' % (object.name)</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+</odoo>

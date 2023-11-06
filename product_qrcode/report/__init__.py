@@ -1,0 +1,1 @@
+from . import product_qrcode_report

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_template_form_view_qrcode" model="ir.ui.view">
+        <field name="name">product.template.qrcode.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='group_standard_price']" position="inside">
+                <field name="website_url" widget="url"/>
+            </xpath>
+            <xpath expr="//form/header" position="inside">
+                <button string="Print QrCode" type="object" name="action_print_qrcode"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_template_tree_view_qrcode" model="ir.ui.view">
+        <field name="name">product.template.qrcode.tree</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree/header" position="inside">
+                <button string="Print QrCode" type="object" name="action_print_qrcode"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
