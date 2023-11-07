@@ -13,6 +13,7 @@
         'data/jwt_data.xml',
 
         'views/auth_jwt_validator_views.xml',
+        'views/odoo_connect_api_lines_views.xml',
         'views/odoo_connect_api_views.xml',
         'views/odoo_connect_api_menus.xml',
         'views/auth_body_example.xml',

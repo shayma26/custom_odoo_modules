@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import ast
 from odoo import models, fields, api, Command
 from string import capwords
 from ..tools.tools import format_data
@@ -21,7 +22,18 @@ class OdooConnectApiLine(models.Model):
     report_id = fields.Many2one("ir.actions.report")
     report_template_name = fields.Char(related="report_id.report_name")
     report_type = fields.Selection([('excel', 'EXCEL'), ('pdf', 'PDF')])
-    report_response_type = fields.Selection([('url','URL'),('file','File')])
+    report_response_type = fields.Selection([('url', 'URL'), ('file', 'File')])
+    domain = fields.Char()
+    model_name = fields.Char(related="model_id.model")
+    sort_by_field = fields.Many2one('ir.model.fields',
+                                    domain="[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','!=','binary')]")
+    sort_by_order = fields.Selection([('ASC', 'Ascending'), ('DESC', 'Descending')])
+    date_filter_field = fields.Many2one('ir.model.fields',
+                                        domain="[('model_id','=',model_id),'|',('ttype','=','date'),('ttype','=','datetime')]")
+    date_filter_selection = fields.Selection(
+        [('none', 'None'), ('today', 'Today'), ('t_week', 'This Week'), ('t_month', 'This Month'),
+         ('t_year', 'This Year')])
+    preview = fields.Char()
 
     _sql_constraints = [
         ('unique_api', 'UNIQUE(name,method,model_id)',
@@ -73,16 +85,20 @@ class OdooConnectApiLine(models.Model):
                 vals = vals.get('data')
                 output_data = []
                 for item in vals:
-                    filtered_item = {key: format_data(self.model_id, key, item[key]) for key in model_fields if item.get(key)}
+                    filtered_item = {key: format_data(self.model_id, key, item[key]) for key in model_fields if
+                                     item.get(key)}
                     output_data.append(filtered_item)
                 vals = output_data
             else:
                 vals = {key: format_data(self.model_id, key, vals[key]) for key in model_fields if vals.get(key)}
         model_obj = model_obj.with_user(user)
         if method == 'GET':
+            domain_list = ast.literal_eval(self.domain)
             if record_id:
-                return model_obj.browse(record_id).read(model_fields)
-            return model_obj.search([]).read(model_fields)
+                if vals.get('page_size') and vals.get('page_number'):
+                    print("size",vals.get('page_size'),"number",vals.get('page_number'))
+                return model_obj.browse(record_id).read_group(domain_list, model_fields, None)
+            return model_obj.search(domain_list).read(model_fields)
         if method == 'POST':
             return {'ids': model_obj.create(vals).ids}
         if method == 'PUT':
@@ -94,7 +110,7 @@ class OdooConnectApiLine(models.Model):
         if method == 'report':
             if self.report_response_type == 'url':
                 if self.report_type == 'pdf':
-                    ids = ','.join(map(str,record_id))
+                    ids = ','.join(map(str, record_id))
                     return "/report/pdf/%s/%s" % (self.report_template_name, ids)
                 elif self.report_type == 'excel':
                     return "/report_xlsx/%s/%s" % (self.api_name, self.name)
@@ -108,5 +124,3 @@ class OdooConnectApiLine(models.Model):
                     report_name = 'odoo_connect.api_data_report_xls'
                     report = report._get_report_from_name(report_name)
                     return report.with_context(context)._render_xlsx(report_name, self.id, None)[0]
-
-

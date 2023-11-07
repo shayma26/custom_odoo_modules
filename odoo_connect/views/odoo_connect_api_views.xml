@@ -18,28 +18,33 @@
                             type="object"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                            <button name="%(odoo_connect_lines_action)d" string="API Lines" type="action"
+                                    icon="fa-bars"
+                                    help="Display API Lines list" class="oe_stat_button"/>
+                    </div>
                     <group>
                         <field name="name" placeholder='e.g: "system_integration_api"'/>
-                        <field name="description"/>
+                        <field name="description" style="width:70%%"/>
                         <field name="version"/>
-                        <field name="api_line_ids">
-                            <tree string="API Lines" editable="bottom">
-                                <field name="name" placeholder='e.g: "get_partner"'/>
-                                <field name="description" placeholder='e.g: "Get Partners Data"'/>
-                                <field name="method"/>
-                                <field name="model_id" options="{'no_create': True}"/>
-                                <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"
-                                       options="{'no_create': True}"
-                                       attrs="{'invisible': ['|',('report_type','=','pdf'),('method','=','delete')], 'required': ['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>
-                                <field name="report_type"
-                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
-                                <field name="report_response_type"
-                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
-                                <field name="report_id" domain="[('model_id','=',model_id)]"
-                                       options="{'no_create': True}"
-                                       attrs="{'invisible': [('report_type','!=','pdf')], 'required':[('report_type', '=', 'pdf')]}"/>
-                            </tree>
-                        </field>
+<!--                        <field name="api_line_ids">-->
+<!--                            <tree string="API Lines">-->
+<!--                                <field name="name" placeholder='e.g: "get_partner"'/>-->
+<!--                                <field name="description" placeholder='e.g: "Get Partners Data"'/>-->
+<!--                                <field name="method"/>-->
+<!--                                <field name="model_id" options="{'no_create': True}"/>-->
+<!--                                <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"-->
+<!--                                       options="{'no_create': True}"-->
+<!--                                       attrs="{'invisible': ['|',('report_type','=','pdf'),('method','=','delete')], 'required': ['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>-->
+<!--                                <field name="report_type"-->
+<!--                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>-->
+<!--                                <field name="report_response_type"-->
+<!--                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>-->
+<!--                                <field name="report_id" domain="[('model_id','=',model_id)]"-->
+<!--                                       options="{'no_create': True}"-->
+<!--                                       attrs="{'invisible': [('report_type','!=','pdf')], 'required':[('report_type', '=', 'pdf')]}"/>-->
+<!--                            </tree>-->
+<!--                        </field>-->
                     </group>
                 </sheet>
             </form>

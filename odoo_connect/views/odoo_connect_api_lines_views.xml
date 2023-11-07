@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="odoo_connect_lines_action" model="ir.actions.act_window">
+        <field name="name">Rest API Lines</field>
+        <field name="res_model">odoo.connect.api.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('api_id', '=', active_id)]</field>
+        <field name="context">{'default_api_id':active_id}</field>
+    </record>
+
+    <record id="odoo_connect_api_lines_tree" model="ir.ui.view">
+        <field name="name">odoo.connect.api.line.tree</field>
+        <field name="model">odoo.connect.api.line</field>
+        <field name="arch" type="xml">
+            <tree string="API Lines">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="method"/>
+                <field name="model_id"/>
+                <field name="fields_ids" widget="many2many_tags"/>
+                <field name="report_type"/>
+                <field name="report_response_type"/>
+                <field name="report_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="odoo_connect_api_lines_form" model="ir.ui.view">
+        <field name="name">odoo.connect.api.line.form</field>
+        <field name="model">odoo.connect.api.line</field>
+        <field name="arch" type="xml">
+<!--            <div class="container" style="float:right">-->
+<!--                    <p>-->
+<!--                        Hello-->
+<!--                    </p>-->
+<!--                </div>-->
+            <form string="Create API Line" style="width:50%">
+                <sheet>
+                    <div class="oe_title mb24">
+                        <h1>
+                            <field name="api_id"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="name" placeholder='e.g: "get_partner"'/>
+                        <field name="description" placeholder='e.g: "Get Partners Data"'/>
+                        <field name="model_id" options="{'no_create': True}" placeholder='e.g: "Contact"'/>
+                        <field name="method" placeholder='e.g: "GET"'/>
+                    </group>
+                    <notebook>
+                        <page string="Data">
+                            <group>
+                                <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"
+                                       options="{'no_create': True}"
+                                       attrs="{'invisible': ['|',('report_type','=','pdf'),('method','=','delete')], 'required': ['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>
+                                <field name="report_type"
+                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
+                                <field name="report_response_type"
+                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
+                                <field name="report_id" domain="[('model_id','=',model_id)]"
+                                       options="{'no_create': True}"
+                                       attrs="{'invisible': [('report_type','!=','pdf')], 'required':[('report_type', '=', 'pdf')]}"/>
+                            </group>
+                            <group string="Sort" attrs="{'invisible':[('method','!=','get')]}">
+                                <field name="sort_by_field" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" placeholder="Select a model to add a sort field."/>
+                                <field name="sort_by_order"/>
+                            </group>
+                            <group string="Filter" attrs="{'invisible':[('method','!=','get')]}">
+                                <field name="model_name" invisible="1"/>
+                                <field name="domain" widget="domain" options="{'model': 'model_name', 'in_dialog': True}"/>
+                                <field name="date_filter_field"  options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" placeholder="Select a model to add a date filter field."/>
+                                <field name="date_filter_selection" />
+                            </group>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
