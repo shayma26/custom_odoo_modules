@@ -249,18 +249,11 @@
                                     </pre>
                                 </div>
                                 <p>
-                                    To split records into pages and select one page:
+                                    To split records into pages and select one page, add this body:
                                 </p>
-                                <h4>Request:</h4>
-                                <div>
-                                    <pre>
-                                        GET&#160;<code class="language-markup">
-                                            <t t-esc="host_url"/>api/<t
-                                                    t-esc="api.name"/>/<t
-                                                    t-esc="line.name"/>/{int:page_size}/{int:page_number}
-                                        </code>
-                                    </pre>
-                                </div>
+                                <h4>Body:</h4>
+                                <t t-call="odoo_connect.json_body_example"/>
+                                <br/>
                                 <h4>Response:</h4>
                                 <t t-call="odoo_connect.json_response_example"/>
                             </div>
