@@ -45,7 +45,8 @@ class RestAPICustomController(http.Controller):
             ]
             return request.make_response(report, headers=xlsxhttpheaders)
 
-    @http.route(['/api/<api_name>/<name>', '/api/<api_name>/<name>/<int:record_id>'], auth='jwt_user_auth', type='json')
+    @http.route(['/api/<api_name>/<name>', '/api/<api_name>/<name>/<int:page_size>/<int:page_number>',
+                 '/api/<api_name>/<name>/<int:record_id>'], auth='jwt_user_auth', type='json')
     def odoo_connect_apis(self, api_name, name, record_id=None, **kwargs):
         partner_id = request.jwt_partner_id
         user = request.env['res.users'].search([('partner_id', '=', partner_id)])
@@ -73,12 +74,9 @@ class RestAPICustomController(http.Controller):
             res['error'] = 'API does not exist'
             return res
         try:
-            print("size", kwargs.get('page_size'))
             if kwargs.get('page_size') and kwargs.get('page_number'):
-                print("size",kwargs.get('page_size'),"number",kwargs.get('page_number'))
                 vals['page_size'] = kwargs.get('page_size')
                 vals['page_number'] = kwargs.get('page_number')
-            print("vals",vals)
             data = result.api_action(method, user, record_id, vals)
         except Exception as e:
             res['error'] = 'Error accrued when calling Api %s' % str(e)
@@ -98,7 +96,8 @@ class RestAPICustomController(http.Controller):
         }
         try:
             get_api = request.env['odoo.connect.api'].search([('name', '=', api_name)])
-            result = get_api.api_line_ids.filtered(lambda rec: rec.name == name and rec.method == 'report' and rec.report_response_type == 'url')
+            result = get_api.api_line_ids.filtered(
+                lambda rec: rec.name == name and rec.method == 'report' and rec.report_response_type == 'url')
             if record_id:
                 ids = [int(i) for i in record_id.split(',')]
             else:

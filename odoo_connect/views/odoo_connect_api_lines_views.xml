@@ -63,14 +63,12 @@
                             </group>
                             <group string="Sort" attrs="{'invisible':[('method','!=','get')]}">
                                 <field name="sort_by_field" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" placeholder="Select a model to add a sort field."/>
-                                <field name="sort_by_order"/>
+                                <field name="sort_by_order" attrs="{'required':[('sort_by_field','!=',None)]}"/>
                             </group>
                             <group string="Filter" attrs="{'invisible':[('method','!=','get')]}">
                                 <field name="model_name" invisible="1"/>
                                 <field name="domain" widget="domain" options="{'model': 'model_name', 'in_dialog': True}"/>
-                                <field name="date_filter_field"  options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" placeholder="Select a model to add a date filter field."/>
-                                <field name="date_filter_selection" />
-                            </group>
+                                </group>
                         </page>
                     </notebook>
 

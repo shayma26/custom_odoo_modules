@@ -26,13 +26,9 @@ class OdooConnectApiLine(models.Model):
     domain = fields.Char()
     model_name = fields.Char(related="model_id.model")
     sort_by_field = fields.Many2one('ir.model.fields',
-                                    domain="[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','!=','binary')]")
+                                    domain="[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','!=',"
+                                           "'binary')]")
     sort_by_order = fields.Selection([('ASC', 'Ascending'), ('DESC', 'Descending')])
-    date_filter_field = fields.Many2one('ir.model.fields',
-                                        domain="[('model_id','=',model_id),'|',('ttype','=','date'),('ttype','=','datetime')]")
-    date_filter_selection = fields.Selection(
-        [('none', 'None'), ('today', 'Today'), ('t_week', 'This Week'), ('t_month', 'This Month'),
-         ('t_year', 'This Year')])
     preview = fields.Char()
 
     _sql_constraints = [
@@ -80,7 +76,7 @@ class OdooConnectApiLine(models.Model):
     def api_action(self, method, user, record_id=None, vals=None):
         model_obj = self.env[self.model_id.model]
         model_fields = self.fields_ids.mapped('name')
-        if vals:
+        if vals and method != 'GET':
             if vals.get('data'):
                 vals = vals.get('data')
                 output_data = []
@@ -93,12 +89,18 @@ class OdooConnectApiLine(models.Model):
                 vals = {key: format_data(self.model_id, key, vals[key]) for key in model_fields if vals.get(key)}
         model_obj = model_obj.with_user(user)
         if method == 'GET':
-            domain_list = ast.literal_eval(self.domain)
+            domain_list = ast.literal_eval(self.domain)  # convert str to list
             if record_id:
+                return model_obj.browse(record_id).read(model_fields)
+            else:
+                sort_by = '%s %s' % (self.sort_by_field.name, self.sort_by_order) if self.sort_by_field else None
+                result = model_obj.search_read(domain=domain_list, fields=model_fields,
+                                               order=sort_by)
                 if vals.get('page_size') and vals.get('page_number'):
-                    print("size",vals.get('page_size'),"number",vals.get('page_number'))
-                return model_obj.browse(record_id).read_group(domain_list, model_fields, None)
-            return model_obj.search(domain_list).read(model_fields)
+                    pages = [result[i:i + vals.get('page_size')] for i in
+                             range(0, len(result), vals.get('page_size'))]
+                    result = pages[vals.get('page_number')-1]
+                return result
         if method == 'POST':
             return {'ids': model_obj.create(vals).ids}
         if method == 'PUT':

@@ -235,6 +235,9 @@
 
                                 <h3>Read List Records:</h3>
                                 <t t-set="is_single_request" t-value="False"/>
+                                <p>
+                                    To read all records:
+                                </p>
                                 <h4>Request:</h4>
                                 <div>
                                     <pre>
@@ -242,6 +245,19 @@
                                             <t t-esc="host_url"/>api/<t
                                                     t-esc="api.name"/>/<t
                                                     t-esc="line.name"/>
+                                        </code>
+                                    </pre>
+                                </div>
+                                <p>
+                                    To split records into pages and select one page:
+                                </p>
+                                <h4>Request:</h4>
+                                <div>
+                                    <pre>
+                                        GET&#160;<code class="language-markup">
+                                            <t t-esc="host_url"/>api/<t
+                                                    t-esc="api.name"/>/<t
+                                                    t-esc="line.name"/>/{int:page_size}/{int:page_number}
                                         </code>
                                     </pre>
                                 </div>
