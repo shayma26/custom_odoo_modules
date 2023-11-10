@@ -31,6 +31,10 @@
             'odoo_connect/static/src/js/prism.js',
             'odoo_connect/static/src/js/odoo_connect.js',
             'odoo_connect/static/src/css/style.css'
+        ],
+        'web.assets_backend':[
+            'odoo_connect/static/src/preview/*',
+            'odoo_connect/static/src/view_inheritance/*',
         ]
     },
     'installable': True,

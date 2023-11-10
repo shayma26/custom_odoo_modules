@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import ast
-from odoo import models, fields, api, Command
+from odoo import models, fields, api
 from string import capwords
-from ..tools.tools import format_data
+from ..tools.tools import format_data, replace_last, insert_after
 from odoo.http import request
 
 
@@ -15,7 +15,8 @@ class OdooConnectApiLine(models.Model):
     api_name = fields.Char(related="api_id.name", readonly=True)
     api_id = fields.Many2one('odoo.connect.api', readonly=True)
     method = fields.Selection(
-        [('get', 'GET'), ('post', 'POST'), ('put', 'PUT'), ('delete', 'DELETE'), ('report', 'REPORT')], required=True)
+        [('get', 'GET'), ('post', 'POST'), ('put', 'PUT'), ('delete', 'DELETE'), ('report', 'REPORT')], required=True,
+        default='get')
     model_id = fields.Many2one('ir.model', string='Model', required=True, ondelete='cascade')
     fields_ids = fields.Many2many('ir.model.fields', help='''Selecting fields is mandatory when using POST and PUT 
     methods and when using Excel report type in REPORT method''')
@@ -29,7 +30,9 @@ class OdooConnectApiLine(models.Model):
                                     domain="[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','!=',"
                                            "'binary')]")
     sort_by_order = fields.Selection([('ASC', 'Ascending'), ('DESC', 'Descending')])
-    preview = fields.Char()
+    request_preview = fields.Text(readonly=True)
+    body_preview = fields.Text(readonly=True)
+    response_preview = fields.Text(readonly=True)
 
     _sql_constraints = [
         ('unique_api', 'UNIQUE(name,method,model_id)',
@@ -41,8 +44,6 @@ class OdooConnectApiLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get('name'):
-                vals['name'] = vals.get('name').replace(" ", "_").lower()
             if vals.get('description'):
                 vals['description'] = capwords(vals.get('description'))
             if not vals.get('description') and vals.get('name'):
@@ -50,8 +51,6 @@ class OdooConnectApiLine(models.Model):
         return super().create(vals_list)
 
     def write(self, vals):
-        if vals.get('name'):
-            vals['name'] = vals.get('name').replace(" ", "_").lower()
         if vals.get('description'):
             vals['description'] = capwords(vals.get('description'))
         return super().write(vals)
@@ -61,17 +60,81 @@ class OdooConnectApiLine(models.Model):
         for record in self:
             if record.model_id:
                 record.fields_ids = None
-                self.report_id = None
-                self.report_response_type = None
-                if self.method == 'post':
-                    required_fields = self.model_id.field_id.filtered(lambda rec: rec.required)
-                    if required_fields:
-                        self.fields_ids = required_fields.ids
+                record.report_id = None
+                record.report_response_type = None
+
+    @api.onchange('name')
+    def _onchange_name(self):
+        for record in self:
+            if record.name:
+                record.name = record.name.replace(" ", "_").lower()
 
     @api.onchange('method')
     def _onchange_method(self):
-        self.report_type = None
-        self.report_response_type = None
+        for record in self:
+            record.report_type = None
+            record.report_response_type = None
+
+
+    @api.onchange('method','model_id')
+    def _onchange_required_fields(self):
+        for record in self:
+            if record.model_id and record.method == 'post':
+                required_fields = record.model_id.field_id.filtered(lambda rec: rec.required)
+                if required_fields:
+                    record.fields_ids = required_fields.ids
+
+    @api.onchange('name', 'method', 'report_response_type', 'report_type')
+    def _onchange_request_preview(self):
+        for record in self:
+            method = ''
+            report = ''
+            has_id = ''
+            if record.method == 'delete' or record.method == 'put':
+                has_id = '/{int:id}'
+            if record.method == 'report':
+                method = 'GET '
+                if record.report_response_type == 'file':
+                    report = 'report_file/'
+                    record.response_preview = "%s File" % record.report_type.upper()
+                if record.report_response_type == 'url':
+                    report = 'report/'
+                    record.response_preview = '''{\n"jsonrpc": "2.0",\n"id": id,\n"result": {\n\t"success": "true",\n\t"error": "",\n\t"data":"url""}\n}'''
+            else:
+                method = record.method.upper() + ' '
+            record.request_preview = method
+            if record.name:
+                record.request_preview += self.get_base_url() + '/api/' + report + record.api_name + '/' + record.name + has_id
+
+    @api.onchange('method','fields_ids','model_id')
+    def _onchange_body_response_preview(self):
+        for record in self:
+            record.response_preview = '''{\n"jsonrpc": "2.0",\n"id": id,\n"result": {\n\t"success": "true",\n\t"error": "",\n\t"data":\n\t}\n}'''
+            response_data = ""
+            if record.method == 'get':
+                record.body_preview = '''{\n\t"page_size": {int:page_size},\n\t"page_number": {int:page_number}\n}'''
+                if record.fields_ids:
+                    fields = record.fields_ids
+                else:
+                    fields = record.model_id.field_id
+                response_data = '[\n'
+                for field in fields:
+                    response_data += '''\t\t"%s": {%s:%s_value},\n''' % (field.name, field.ttype, field.name)
+                response_data = replace_last(response_data,',','\n')
+                response_data += '''\t\t"total_records": {int:total_records}\n\t\t"total_pages": {int:total_records}\n\t]'''
+            else:
+                if record.fields_ids and (record.method == 'post' or record.method == 'put'):
+                    record.body_preview = '{\n'
+                    for field in record.fields_ids:
+                        record.body_preview += '''\t"%s": {%s:%s_value},\n''' % (field.name, field.ttype,field.name)
+                    record.body_preview = replace_last(record.body_preview,',','\n}')
+                if record.method == 'post':
+                    response_data = '''{"ids":[id]}'''
+                if record.method == 'put' or record.method == 'delete':
+                    response_data = '''{"id":id}'''
+
+            record.response_preview = insert_after(record.response_preview,response_data,'"data":')
+
 
     def api_action(self, method, user, record_id=None, vals=None):
         model_obj = self.env[self.model_id.model]
@@ -97,9 +160,13 @@ class OdooConnectApiLine(models.Model):
                 result = model_obj.search_read(domain=domain_list, fields=model_fields,
                                                order=sort_by)
                 if vals.get('page_size') and vals.get('page_number'):
+                    total_records = len(result)
                     pages = [result[i:i + vals.get('page_size')] for i in
                              range(0, len(result), vals.get('page_size'))]
-                    result = pages[vals.get('page_number')-1]
+                    total_pages = len(pages)
+                    result = pages[vals.get('page_number') - 1]
+                    result.insert(len(result),{'total_records':total_records,"total_pages":total_pages})
+                    print("result", result)
                 return result
         if method == 'POST':
             return {'ids': model_obj.create(vals).ids}

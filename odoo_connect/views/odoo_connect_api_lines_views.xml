@@ -29,50 +29,53 @@
         <field name="name">odoo.connect.api.line.form</field>
         <field name="model">odoo.connect.api.line</field>
         <field name="arch" type="xml">
-<!--            <div class="container" style="float:right">-->
-<!--                    <p>-->
-<!--                        Hello-->
-<!--                    </p>-->
-<!--                </div>-->
-            <form string="Create API Line" style="width:50%">
-                <sheet>
-                    <div class="oe_title mb24">
-                        <h1>
-                            <field name="api_id"/>
-                        </h1>
-                    </div>
+            <form string="Create API Line">
+                <div class="oe_title mb24">
+                    <h1>
+                        <field name="api_id"/>
+                    </h1>
+                </div>
+                <group>
                     <group>
                         <field name="name" placeholder='e.g: "get_partner"'/>
                         <field name="description" placeholder='e.g: "Get Partners Data"'/>
                         <field name="model_id" options="{'no_create': True}" placeholder='e.g: "Contact"'/>
                         <field name="method" placeholder='e.g: "GET"'/>
-                    </group>
-                    <notebook>
-                        <page string="Data">
-                            <group>
-                                <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"
-                                       options="{'no_create': True}"
-                                       attrs="{'invisible': ['|',('report_type','=','pdf'),('method','=','delete')], 'required': ['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>
-                                <field name="report_type"
-                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
-                                <field name="report_response_type"
-                                       attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
-                                <field name="report_id" domain="[('model_id','=',model_id)]"
-                                       options="{'no_create': True}"
-                                       attrs="{'invisible': [('report_type','!=','pdf')], 'required':[('report_type', '=', 'pdf')]}"/>
-                            </group>
-                            <group string="Sort" attrs="{'invisible':[('method','!=','get')]}">
-                                <field name="sort_by_field" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" placeholder="Select a model to add a sort field."/>
-                                <field name="sort_by_order" attrs="{'required':[('sort_by_field','!=',None)]}"/>
-                            </group>
-                            <group string="Filter" attrs="{'invisible':[('method','!=','get')]}">
-                                <field name="model_name" invisible="1"/>
-                                <field name="domain" widget="domain" options="{'model': 'model_name', 'in_dialog': True}"/>
-                                </group>
-                        </page>
-                    </notebook>
+                        <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"
+                               options="{'no_create': True}"
+                               attrs="{'invisible': ['|',('report_type','=','pdf'),('method','=','delete')], 'required': ['|',('method', '=', 'post'),('method', '=', 'put'),('report_type','=','excel')]}"/>
+                        <field name="report_type"
+                               attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
+                        <field name="report_response_type"
+                               attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
+                        <field name="report_id" domain="[('model_id','=',model_id)]"
+                               options="{'no_create': True}"
+                               attrs="{'invisible': [('report_type','!=','pdf')], 'required':[('report_type', '=', 'pdf')]}"/>
 
-                </sheet>
+                        <separator string="Sort and Filter" attrs="{'invisible':[('method','!=','get')]}"/>
+                        <field name="sort_by_field"
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                               placeholder="Select a model to add a sort field."
+                               attrs="{'invisible':[('method','!=','get')]}"/>
+                        <field name="sort_by_order"
+                               attrs="{'required':[('sort_by_field','!=',False)],'invisible':[('method','!=','get')]}"/>
+                        <field name="model_name" invisible="1"/>
+                        <field name="domain" widget="domain" options="{'model': 'model_name', 'in_dialog': True}"
+                               attrs="{'invisible':[('method','!=','get')]}"/>
+                    </group>
+                    <group>
+                        <div style="width: 500px;float: right;top: 35px;right: 6%;border-left: 1px #dee2e6 solid;position: absolute;overflow: auto;">
+                            <h5>Request:</h5>
+                            <field name="request_preview" widget="preview"/>
+                            <h5 attrs="{'invisible':['|',('method','=','report'),('method','=','delete')]}">Body:</h5>
+                            <field name="body_preview" widget="preview" attrs="{'invisible':['|',('method','=','report'),('method','=','delete')]}"/>
+                            <h5>Response:</h5>
+                            <field name="response_preview" widget="preview"/>
+                        </div>
+                    </group>
+
+                </group>
+
             </form>
         </field>
     </record>
