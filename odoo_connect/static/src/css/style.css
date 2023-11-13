@@ -221,7 +221,6 @@ p, .content ul, .content ol{
     max-width: 680px;
 }
 .content .central-overflow-x {
-    /*margin-right: calc(50% + 28px);*/
     margin-left: 28px;
     padding: 0;
     overflow-y: hidden;
@@ -353,6 +352,100 @@ body.one-content-column-version .content table td {
 body.one-content-column-version .content thead {
     color: #417179;
 }
+
+* RESPONSIVE
+----------------------------------------------------------------------------------------*/
+
+@media only screen and (max-width:980px){
+    .content h1, .content h2, .content h3, .content h4, .content h5, .content h6, .content p, .content table, .content ul, .content ol, .content aside, .content dl, .content ul, .content ol {
+        margin-right: 0;
+    }
+    .content .central-overflow-x {
+        margin: 0;
+        padding: 0 28px;
+    }
+    .content-code{
+        display: none;
+    }
+    .content pre, .content blockquote {
+        margin: 20px 0;
+        padding: 28px;
+        display: block;
+        width: auto;
+        float: none;
+    }
+    .content pre code {
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width:680px){
+    html {
+        scroll-padding-top: 83px;
+    }
+    html.menu-opened {
+        overflow: hidden;
+    }
+    .left-menu {
+        position: relative;
+        width: auto;
+    }
+    .left-menu .content-menu {
+        position: fixed;
+        width: 400px;
+        max-width: 90vw;
+        z-index: 3;
+        top: 0;
+        bottom: 0;
+        right: -405px;
+        left: auto;
+        background-color: #fff;
+        margin: 0;
+        overflow-x: hidden;
+        padding-top: 83px;
+        padding-bottom: 20px;
+    }
+    .left-menu .content-menu ul {
+        position: relative;
+    }
+    .left-menu .mobile-menu-closer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        background-color: rgba(50, 63, 76, .5);
+        opacity: 0;
+        visibility: hidden;
+    }
+    html.menu-opened .left-menu .mobile-menu-closer {
+        opacity: 1;
+        visibility: visible;
+    }
+    html.menu-opened .left-menu .content-menu {
+        right: 0;
+    }
+    .left-menu .content-logo {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 4;
+        background-color: #f4f5f8;
+    }
+    .content-logo .logo {
+        margin-right: 65px;
+    }
+    .content-page{
+        margin-left: 0;
+        padding-top: 83px;
+    }
+    .burger-menu-icon {
+        display: block;
+    }
+}
+
 
 
 /* BROWSER AND NON-SEMANTIC STYLING

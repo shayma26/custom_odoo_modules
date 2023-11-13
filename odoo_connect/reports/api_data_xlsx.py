@@ -8,7 +8,7 @@ class ApiDataXlsx(models.AbstractModel):
     _description = 'Xlsx report generation'
 
     def generate_xlsx_report(self, workbook, data, api_line_id):
-        sheet = workbook.add_worksheet(api_line_id.description)
+        sheet = workbook.add_worksheet(api_line_id.title)
         header_bold_style = workbook.add_format(
             {'bold': True, 'align': 'center', 'border': 2})
         body_style = workbook.add_format(

@@ -1,0 +1,17 @@
+.form-preview {
+    width: 40%;
+    float: right;
+    top: 35px;
+    right: 6%;
+    border-left: 1px #dee2e6 solid;
+    position: absolute;
+    overflow: auto;
+  }
+/* Apply styles for screens smaller than 600 pixels */
+@media only screen and (max-width: 600px) {
+    .responsive-form {
+        width: 100%;
+        margin: 0;
+    }
+
+}

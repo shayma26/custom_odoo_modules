@@ -26,6 +26,9 @@
 
     ],
     'assets': {
+        'web.assets_common':[
+            'odoo_connect/static/src/preview/*',
+        ],
         'web.assets_frontend':[
             'odoo_connect/static/src/css/prism.css',
             'odoo_connect/static/src/js/prism.js',
@@ -33,9 +36,8 @@
             'odoo_connect/static/src/css/style.css'
         ],
         'web.assets_backend':[
-            'odoo_connect/static/src/preview/*',
-            'odoo_connect/static/src/view_inheritance/*',
-        ]
+            'odoo_connect/static/src/css/responsive.css'
+        ],
     },
     'installable': True,
     'application': True,

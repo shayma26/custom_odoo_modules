@@ -1,3 +1,4 @@
+// hide footer from documentation page
 odoo.define('odoo_connect.hide_documentation_footer', function (require) {
     'use strict';
 

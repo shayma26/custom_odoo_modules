@@ -12,7 +12,8 @@ class OdooConnectApiLine(models.Model):
     _description = "Odoo API Line"
 
     name = fields.Char(required=True, help="The name used in the URL to call this line from the API")
-    description = fields.Char('Title', help="Name of this API line")
+    title = fields.Char('Title', help="Name of this API line")
+    description = fields.Text(compute='_compute_api_line_description')
     api_name = fields.Char(related="api_id.name", readonly=True)
     api_id = fields.Many2one('odoo.connect.api', readonly=True)
     method = fields.Selection(
@@ -45,15 +46,15 @@ class OdooConnectApiLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get('description'):
-                vals['description'] = capwords(vals.get('description'))
-            if not vals.get('description') and vals.get('name'):
-                vals['description'] = capwords(vals.get('name').replace("_", " "))
+            if vals.get('title'):
+                vals['title'] = capwords(vals.get('title'))
+            if not vals.get('title') and vals.get('name'):
+                vals['title'] = capwords(vals.get('name').replace("_", " "))
         return super().create(vals_list)
 
     def write(self, vals):
-        if vals.get('description'):
-            vals['description'] = capwords(vals.get('description'))
+        if vals.get('title'):
+            vals['title'] = capwords(vals.get('title'))
         return super().write(vals)
 
     @api.onchange('model_id')
@@ -143,6 +144,32 @@ class OdooConnectApiLine(models.Model):
 
             record.response_preview = json.dumps(response_preview)
             record.body_preview = json.dumps(body_preview)
+
+    # TODO
+    def _compute_api_line_description(self):
+        for record in self:
+            if record.method == 'get':
+                record.description = record.name + '  fetches all the records from the model ' + record.model_name + ' and display them using fields: ' + ', '.join(
+                    record.fields_ids.mapped('name'))
+            elif record.method == 'post':
+                record.description = record.name + " will create new record(s) for the model " + record.model_name + " after providing these fields' values in the body:"+ ', '.join(
+                    record.fields_ids.mapped('name'))
+            elif record.method == 'put':
+                record.description = record.name + " fetches the records using the specified id(s) from the model " + record.model_name + " and update the following fields:" + ', '.join(
+                    record.fields_ids.mapped('name'))
+            elif record.method == 'delete':
+                record.description = record.name + " fetches all the record having the specified id from the model " + record.model_name + " and delete them."
+            elif record.method == 'report':
+                record.description = record.name + " returns the " + record.report_type.upper() + " " + record.report_response_type + " that contains all the records from the model " + record.model_name
+                # if record.report_type == 'excel':
+                #     if record.report_response_type == 'file':
+                #         record.description = ""
+                #     elif record.report_response_type == 'url':
+                #         record.description = ""
+                #     record.description = ""
+                # elif record.report_type == 'pdf':
+                #     pass
+                #
 
     def api_action(self, method, user, record_id=None, vals=None):
         model_obj = self.env[self.model_id.model]

@@ -14,6 +14,7 @@
                         <span>Odoo Connect API Documentation</span>
                     </div>
                 </div>
+                <div class="mobile-menu-closer">
                 <div class="content-menu">
                     <div class="content-infos">
                         <div class="info">
@@ -58,7 +59,7 @@
                                     <t t-foreach="read_methods" t-as="line">
                                         <li class="scroll-to-link">
                                             <a t-attf-href="#content-{{line.name}}">
-                                                <t t-esc="line.description"/>
+                                                <t t-esc="line.title"/>
                                             </a>
                                         </li>
                                     </t>
@@ -75,7 +76,7 @@
                                     <t t-foreach="create_methods" t-as="line">
                                         <li class="scroll-to-link">
                                             <a t-attf-href="#content-{{line.name}}">
-                                                <t t-esc="line.description"/>
+                                                <t t-esc="line.title"/>
                                             </a>
                                         </li>
                                     </t>
@@ -92,7 +93,7 @@
                                     <t t-foreach="update_methods" t-as="line">
                                         <li class="scroll-to-link">
                                             <a t-attf-href="#content-{{line.name}}">
-                                                <t t-esc="line.description"/>
+                                                <t t-esc="line.title"/>
                                             </a>
                                         </li>
                                     </t>
@@ -109,7 +110,7 @@
                                     <t t-foreach="delete_methods" t-as="line">
                                         <li class="scroll-to-link">
                                             <a t-attf-href="#content-{{line.name}}">
-                                                <t t-esc="line.description"/>
+                                                <t t-esc="line.title"/>
                                             </a>
                                         </li>
                                     </t>
@@ -126,7 +127,7 @@
                                     <t t-foreach="report_methods" t-as="line">
                                         <li class="scroll-to-link">
                                             <a t-attf-href="#content-{{line.name}}">
-                                                <t t-esc="line.description"/>
+                                                <t t-esc="line.title"/>
                                             </a>
                                         </li>
                                     </t>
@@ -135,6 +136,7 @@
                         </t>
 
                     </ul>
+                </div>
                 </div>
             </div>
 
@@ -206,7 +208,7 @@
                         <t t-foreach="read_methods" t-as="line">
                             <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
                                 <h2>
-                                    <t t-esc="line.description"/>
+                                    <t t-esc="line.title"/>
                                 </h2>
                                 <p>
                                     <t t-esc="line.name"/>
@@ -265,7 +267,7 @@
                         <t t-foreach="create_methods" t-as="line">
                             <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
                                 <h2>
-                                    <t t-esc="line.description"/>
+                                    <t t-esc="line.title"/>
                                 </h2>
                                 <p>
                                     <t t-esc="line.name"/>
@@ -322,7 +324,7 @@
                         <t t-foreach="update_methods" t-as="line">
                             <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
                                 <h2>
-                                    <t t-esc="line.description"/>
+                                    <t t-esc="line.title"/>
                                 </h2>
                                 <p>
                                     <t t-esc="line.name"/>
@@ -357,7 +359,7 @@
                         <t t-foreach="delete_methods" t-as="line">
                             <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
                                 <h2>
-                                    <t t-esc="line.description"/>
+                                    <t t-esc="line.title"/>
                                 </h2>
                                 <p>
                                     <t t-esc="line.name"/>
@@ -387,14 +389,14 @@
                         <t t-foreach="report_methods" t-as="line">
                             <div class="overflow-hidden content-section" t-attf-id="content-{{line.name}}">
                                 <h2>
-                                    <t t-esc="line.description"/>
+                                    <t t-esc="line.title"/>
                                 </h2>
 
                                 <t t-if="line.report_type == 'excel'">
                                     <t t-set="is_single_request" t-value="True"/>
                                     <p>
                                         <t t-esc="line.name"/>
-                                        will return the Excel <t t-if="line.report_response_type == 'file'">file</t> <t t-else="">URL</t> that contains all the records from the model
+                                         return the Excel <t t-if="line.report_response_type == 'file'">file</t> <t t-else="">URL</t> that contains all the records from the model
                                         <t t-esc="line.model_id.model"/>
                                         and display them using the fields:
                                         <t t-foreach="line.fields_ids" t-as="field">
