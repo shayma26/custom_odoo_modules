@@ -7,18 +7,15 @@ const { Component, onWillUpdateProps, onWillStart, useRef, onMounted } = owl;
 export class Preview extends Component {
 
      parseAndStringify(input) {
+     // IMPORTANT: The string that would be parsed should be passed by json.dumps in python
         try {
-            console.log("input",input)
             // Attempt to parse the input as JSON
             const parsed = JSON.parse(input);
 
             // If parsing succeeds, stringify it again
-            const prettyJSON = JSON.stringify(parsed, null, 4);
-            console.log("pretty",prettyJSON)
-            return prettyJSON
+            return JSON.stringify(parsed, null, 4);
         } catch (error) {
             // If parsing fails, return the input as it is
-            console.log("error",error)
             return input;
         }
     }
