@@ -3,7 +3,7 @@
     <t t-name="odoo_connect.Preview" owl="1">
         <div>
             <div class="card-body" style="padding: 5px;">
-                <pre t-ref="targetContainer"></pre>
+                <pre><code class='language-json' t-ref="targetContainer"/></pre>
             </div>
         </div>
     </t>

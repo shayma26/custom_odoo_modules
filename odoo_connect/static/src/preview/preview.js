@@ -10,23 +10,28 @@ export class Preview extends Component {
         this.orm = useService("orm");
         var api_line_model = this.env.model
         this.api_line_data = api_line_model.root.data
+        this.targetContainer = useRef("targetContainer");
 
-        onWillStart(async() => {
-            //this.result = await this.getData();
-            });
+//        onWillStart(() => {
+//            if (this.targetContainer.el) {
+//                this.targetContainer.el.value = this.props.value;
+//                Prism.highlightAll()
+//                }
+//            });
 
         onWillUpdateProps((nextProps) => {
 
             // you can access to other fields in nextProps.record
-            this.targetContainer.el.innerHTML = "<code class='language-json'>\n"+nextProps.value+"</code>";
+            console.log("update props", nextProps.value)
+            this.targetContainer.el.textContent = nextProps.value;
             Prism.highlightAll()
         });
 
-        this.targetContainer = useRef("targetContainer");
 
         onMounted(() => {
                 if (this.targetContainer.el) {
-                    this.targetContainer.el.innerHTML = "<code class='language-json'>\n"+this.props.value+"</code>";
+                    console.log("mounted", this.props.value)
+                    this.targetContainer.el.textContent = this.props.value;
                     Prism.highlightAll()
                 }
         });
