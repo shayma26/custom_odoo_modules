@@ -95,11 +95,10 @@ class OdooConnectApiLine(models.Model):
                 method = 'GET '
                 if record.report_response_type == 'file':
                     report = 'report_file/'
-                    record.response_preview = "%s File" % record.report_type.upper()
-                if record.report_response_type == 'url':
+                    record.response_preview = "%s File" % record.report_type.upper() if record.report_type else "File"
+                elif record.report_response_type == 'url':
                     report = 'report/'
-                    # record.response_preview = '''{\n"jsonrpc": "2.0",\n"id": id,\n"result": {\n\t"success": "true",\n\t"error": "",\n\t"data":"url""}\n}'''
-                    record.response_preview = str({
+                    record.response_preview = json.dumps({
                         "jsonrpc": "2.0",
                         "id": 'id',
                         "result": {
@@ -115,18 +114,16 @@ class OdooConnectApiLine(models.Model):
     @api.onchange('method', 'fields_ids', 'model_id')
     def _onchange_body_response_preview(self):
         for record in self:
-            # record.response_preview = '''{\n"jsonrpc": "2.0",\n"id": id,\n"result": {\n\t"success": "true",
-            # \n\t"error": "",\n\t"data":\n\t}\n}'''
             response_preview = {
-                        "jsonrpc": "2.0",
-                        "id": 'id',
-                        "result": {
-                            "success": "true",
-                            "error": ""}}
+                "jsonrpc": "2.0",
+                "id": 'id',
+                "result": {
+                    "success": "true",
+                    "error": ""}}
             body_preview = {}
 
             if record.method == 'get':
-                body_preview = {"page_size": "int_value","page_number": "int_value"}
+                body_preview = {"page_size": "int_value", "page_number": "int_value"}
                 response_preview['result']['data'] = [{}]
                 if record.fields_ids:
                     fields = record.fields_ids
@@ -134,15 +131,15 @@ class OdooConnectApiLine(models.Model):
                     fields = record.model_id.field_id
                 for field in fields:
                     response_preview['result']['data'][0]["%s" % field.name] = "%s_value" % field.ttype
-                response_preview['result']['data'].append({"total_records":"int_value","total_pages":"int_value"})
+                response_preview['result']['data'].append({"total_records": "int_value", "total_pages": "int_value"})
             else:
                 if record.fields_ids and (record.method == 'post' or record.method == 'put'):
                     for field in record.fields_ids:
                         body_preview[field.name] = "%s_value" % field.ttype
                 if record.method == 'post':
-                    response_preview['result']['data'] = {"ids":"[id]"}
+                    response_preview['result']['data'] = {"ids": "[id]"}
                 if record.method == 'put' or record.method == 'delete':
-                    response_preview['result']['data'] = {"id":"id"}
+                    response_preview['result']['data'] = {"id": "id"}
 
             record.response_preview = json.dumps(response_preview)
             record.body_preview = json.dumps(body_preview)

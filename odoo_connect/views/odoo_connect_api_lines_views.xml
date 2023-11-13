@@ -68,7 +68,8 @@
                             <h5>Request:</h5>
                             <field name="request_preview" widget="preview"/>
                             <h5 attrs="{'invisible':['|',('method','=','report'),('method','=','delete')]}">Body:</h5>
-                            <field name="body_preview" widget="preview" attrs="{'invisible':['|',('method','=','report'),('method','=','delete')]}"/>
+                            <field name="body_preview" widget="preview"
+                                   attrs="{'invisible':['|',('method','=','report'),('method','=','delete')]}"/>
                             <h5>Response:</h5>
                             <field name="response_preview" widget="preview"/>
                         </div>
