@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import ast
-import json
+from odoo.exceptions import ValidationError
 from odoo import models, fields, api
 from string import capwords
 from ..tools.tools import format_data, replace_last, insert_after
@@ -99,13 +99,9 @@ class OdooConnectApiLine(models.Model):
                     record.response_preview = "%s File" % record.report_type.upper() if record.report_type else "File"
                 elif record.report_response_type == 'url':
                     report = 'report/'
-                    record.response_preview = json.dumps({
-                        "jsonrpc": "2.0",
-                        "id": 'id',
-                        "result": {
-                            "success": "true",
-                            "error": "",
-                            "data": "url"}})
+                    record.response_preview = record.response_preview = ('{\n"jsonrpc": "2.0",\n"id": id,\n"result": {'
+                                                                         '\n\t"success": "true",\n\t"error": "",'
+                                                                         '\n\t"data":"url"\n\t}\n}')
             else:
                 method = record.method.upper() + ' '
             record.request_preview = method
@@ -115,61 +111,56 @@ class OdooConnectApiLine(models.Model):
     @api.onchange('method', 'fields_ids', 'model_id')
     def _onchange_body_response_preview(self):
         for record in self:
-            response_preview = {
-                "jsonrpc": "2.0",
-                "id": 'id',
-                "result": {
-                    "success": "true",
-                    "error": ""}}
-            body_preview = {}
+            record.response_preview = ('{\n"jsonrpc": "2.0",\n"id": id,\n"result": {\n\t"success": "true",\n\t"error": '
+                                       '"",\n\t"data":\n\t}\n}')
+            response_data = ""
 
             if record.method == 'get':
-                body_preview = {"page_size": "int_value", "page_number": "int_value"}
-                response_preview['result']['data'] = [{}]
+                record.body_preview = '{\n\t"page_size": int_value, \n\t"page_number": int_value\n}'
                 if record.fields_ids:
                     fields = record.fields_ids
                 else:
                     fields = record.model_id.field_id
-                for field in fields:
-                    response_preview['result']['data'][0]["%s" % field.name] = "%s_value" % field.ttype
-                response_preview['result']['data'].append({"total_records": "int_value", "total_pages": "int_value"})
+                response_data = '[\n'
+                if fields:
+                    response_data += '\t\t{\n'
+                    for field in fields:
+                        response_data += '''\t\t\t"%s": %s_value,\n''' % (field.name, field.ttype)
+                response_data = replace_last(response_data, ',', '\n\t\t}')
+                response_data += '''\t\t{\n\t\t\t"total_records": int_value\n\t\t\t"total_pages": int_value\n\t\t}\n\t\t]'''
             else:
                 if record.fields_ids and (record.method == 'post' or record.method == 'put'):
+                    record.body_preview = '{\n'
                     for field in record.fields_ids:
-                        body_preview[field.name] = "%s_value" % field.ttype
+                        record.body_preview += '\t"%s": %s_value,\n' % (field.name, field.ttype)
+                    record.body_preview = replace_last(record.body_preview, ',', '\n}')
+                if not record.fields_ids:
+                    record.body_preview = "Please Select Fields"
                 if record.method == 'post':
-                    response_preview['result']['data'] = {"ids": "[id]"}
+                    response_data = '{"ids":[id]}'
                 if record.method == 'put' or record.method == 'delete':
-                    response_preview['result']['data'] = {"id": "id"}
+                    response_data = '{"id":id}'
+            record.response_preview = insert_after(record.response_preview, response_data, '"data":')
 
-            record.response_preview = json.dumps(response_preview)
-            record.body_preview = json.dumps(body_preview)
-
-    # TODO
     def _compute_api_line_description(self):
         for record in self:
             if record.method == 'get':
-                record.description = record.name + '  fetches all the records from the model ' + record.model_name + ' and display them using fields: ' + ', '.join(
-                    record.fields_ids.mapped('name'))
+                fields = 'fields: ' + ', '.join(record.fields_ids.mapped('name')) if record.fields_ids else 'all fields.'
+                record.description = record.name + '  fetches all the records from the model ' + record.model_name + ' and display them using ' + fields
             elif record.method == 'post':
-                record.description = record.name + " will create new record(s) for the model " + record.model_name + " after providing these fields' values in the body:"+ ', '.join(
+                record.description = record.name + " will create new record(s) for the model " + record.model_name + " after providing these fields' values in the body: " + ', '.join(
                     record.fields_ids.mapped('name'))
             elif record.method == 'put':
-                record.description = record.name + " fetches the records using the specified id(s) from the model " + record.model_name + " and update the following fields:" + ', '.join(
+                record.description = record.name + " fetches the records using the specified id(s) from the model " + record.model_name + " and update the following fields: " + ', '.join(
                     record.fields_ids.mapped('name'))
             elif record.method == 'delete':
                 record.description = record.name + " fetches all the record having the specified id from the model " + record.model_name + " and delete them."
             elif record.method == 'report':
-                record.description = record.name + " returns the " + record.report_type.upper() + " " + record.report_response_type + " that contains all the records from the model " + record.model_name
-                # if record.report_type == 'excel':
-                #     if record.report_response_type == 'file':
-                #         record.description = ""
-                #     elif record.report_response_type == 'url':
-                #         record.description = ""
-                #     record.description = ""
-                # elif record.report_type == 'pdf':
-                #     pass
-                #
+                if record.report_type == 'excel':
+                    record.description = record.name + " returns the Excel " + record.report_response_type + " that contains all the records from the model " + record.model_name + " and display them using the fields: " + ', '.join(
+                        record.fields_ids.mapped('name'))
+                elif record.report_type == 'pdf':
+                    record.description = record.name + " returns the PDF " + record.report_response_type + " that contains the " + record.report_template_name + " report of the model " + record.model_name
 
     def api_action(self, method, user, record_id=None, vals=None):
         model_obj = self.env[self.model_id.model]

@@ -70,18 +70,15 @@ i{
 p, .content ul, .content ol{
     font-size: 14px;
     color: #777A7A;
-    margin-bottom: 16px;
     line-height: 1.6;
     font-weight: 300;
 }
 .content h1{
     font-size: 1.333em;
     color: #034c8f;
-    padding-top: 2.5em;
     text-transform: uppercase;
     border-top: 1px solid rgba(255,255,255,0.3);
     border-top-width: 0;
-    margin-top: 0;
     clear: both;
 }
 
@@ -198,6 +195,7 @@ p, .content ul, .content ol{
 }
 
 .content {
+    padding: 2rem;
     position: relative;
     z-index: 30;
 }
@@ -214,14 +212,10 @@ p, .content ul, .content ol{
 .content ul,
 .content ol,
 .content .central-overflow-x {
-    margin-right: 30%;
-    padding: 0 28px;
     box-sizing: border-box;
     display: block;
-    max-width: 680px;
 }
 .content .central-overflow-x {
-    margin-left: 28px;
     padding: 0;
     overflow-y: hidden;
     max-width: 100%;
@@ -246,8 +240,6 @@ p, .content ul, .content ol{
 .content h5,
 .content h6 {
     font-size: 1em;
-    margin-top: 1em;
-    margin-bottom: 0.8em;
     color: #034c8f;
     text-transform: uppercase;
 }
@@ -259,12 +251,10 @@ p, .content ul, .content ol{
     margin-top: 0;
     text-transform: none;
     font-size: 0.9em;
-    margin-bottom: 0.2em;
 }
 .content-page .content p,
 .content table {
     font-size: 14px;
-    /*margin-bottom: 1.5em;*/
     border-collapse: collapse;
     border-spacing: 0;
 }
@@ -454,3 +444,18 @@ body.one-content-column-version .content thead {
 .cf:before, .cf:after { content: ""; display: block; }
 .cf:after { clear: both; }
 .ie6 .cf { zoom: 1 }
+
+h1, h2, h3, h4, h5 {
+    line-height: 3;
+}
+.content pre[class*=language-] {
+    padding: 1em;
+    margin-left: 6%;
+    overflow: auto;
+    border-radius: 0.3em;
+    max-width: 650px;
+}
+
+.content div.code-toolbar {
+    width: 100%;
+}

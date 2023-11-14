@@ -27,7 +27,7 @@ pre[class*=language-]{
     margin-top: 1%;
     overflow:auto;
     border-radius:.3em;
-    width: 650px;
+    width: 97%;
 }
 :not(pre)>code[class*=language-],pre[class*=language-]{
     background:#272822;
@@ -84,7 +84,7 @@ pre[class*=language-]{
     div.code-toolbar>.toolbar{
     position:absolute;
     top:0em;
-    right:-5%;
+    right:-2%;
     transition:opacity .3s ease-in-out;
     opacity:0
     }
