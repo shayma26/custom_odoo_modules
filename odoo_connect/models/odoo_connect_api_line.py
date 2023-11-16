@@ -115,7 +115,7 @@ class OdooConnectApiLine(models.Model):
     @api.onchange('accept_attachment')
     def _onchange_accept_attachment(self):
         for record in self:
-            if record.method == 'post':
+            if record.method == 'post' or record.method == 'put':
                 if record.body_preview:
                     if record.accept_attachment:
                         record.body_preview = replace_last(record.body_preview, '\n}',',\n\t"attachment": binary_value\n}')
