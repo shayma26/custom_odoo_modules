@@ -61,7 +61,7 @@ class RestAPICustomController(http.Controller):
         if method not in ['GET', 'POST', 'PUT', 'DELETE']:
             res['error'] = 'Method Not allowed'
             return res
-        if method in ['PUT', 'DELETE'] and (not record_id or not vals):
+        if (method == 'PUT' and not vals) or (method == 'DELETE' and not record_id):
             res['error'] = 'Invalid data'
             return res
         try:
@@ -76,7 +76,7 @@ class RestAPICustomController(http.Controller):
         try:
             data = result.api_action(method, user, record_id, vals)
         except Exception as e:
-            res['error'] = 'Error accrued when calling Api %s' % str(e)
+            res['error'] = 'Error accrued when calling Api: %s' % str(e)
             return res
         res.update({'success': True, 'data': data})
         return res

@@ -43,9 +43,10 @@
                         <field name="title" placeholder='e.g: "Get Partners Data"'/>
                         <field name="model_id" options="{'no_create': True}" placeholder='e.g: "Contact"'/>
                         <field name="method" placeholder='e.g: "GET"'/>
-                        <field name="fields_ids" widget="many2many_tags" domain="[('model_id','=',model_id)]"
+                        <field name="fields_ids" widget="many2many_tags"
                                options="{'no_create': True}"
                                attrs="{'invisible': ['|',('report_type','=','pdf'),('method','=','delete')], 'required': [('method', 'in', ('post','put'))]}"/>
+                        <field name="accept_attachment" attrs="{'invisible': [('method','not in',['post','put'])]}"/>
                         <field name="report_type"
                                attrs="{'invisible': [('method','!=','report')],'required':[('method', '=', 'report')]}"/>
                         <field name="report_response_type"

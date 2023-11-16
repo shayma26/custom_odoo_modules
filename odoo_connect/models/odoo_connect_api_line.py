@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import ast
+import base64
+
 from odoo.exceptions import ValidationError
 from odoo import models, fields, api
 from string import capwords
@@ -21,7 +23,7 @@ class OdooConnectApiLine(models.Model):
         default='get')
     model_id = fields.Many2one('ir.model', string='Model', required=True, ondelete='cascade')
     fields_ids = fields.Many2many('ir.model.fields', help='''Selecting fields is mandatory when using POST and PUT 
-    methods and when using Excel report type in REPORT method''')
+    methods and when using Excel report type in REPORT method''', domain="[('model_id','=',model_id)]")
     report_id = fields.Many2one("ir.actions.report")
     report_template_name = fields.Char(related="report_id.report_name")
     report_type = fields.Selection([('excel', 'EXCEL'), ('pdf', 'PDF')])
@@ -35,6 +37,7 @@ class OdooConnectApiLine(models.Model):
     request_preview = fields.Text()
     body_preview = fields.Text()
     response_preview = fields.Text()
+    accept_attachment = fields.Boolean()
 
     _sql_constraints = [
         ('unique_api', 'UNIQUE(name,method,model_id)',
@@ -76,6 +79,7 @@ class OdooConnectApiLine(models.Model):
         for record in self:
             record.report_type = None
             record.report_response_type = None
+            record.accept_attachment = None
 
     @api.onchange('method', 'model_id')
     def _onchange_required_fields(self):
@@ -108,6 +112,17 @@ class OdooConnectApiLine(models.Model):
             if record.name:
                 record.request_preview += self.get_base_url() + '/api/' + report + record.api_name + '/' + record.name + has_id
 
+    @api.onchange('accept_attachment')
+    def _onchange_accept_attachment(self):
+        for record in self:
+            if record.method == 'post':
+                if record.body_preview:
+                    if record.accept_attachment:
+                        record.body_preview = replace_last(record.body_preview, '\n}',',\n\t"attachment": binary_value\n}')
+                    else:
+                        record.body_preview = replace_last(record.body_preview,',\n\t"attachment": binary_value\n}','\n}')
+
+
     @api.onchange('method', 'fields_ids', 'model_id')
     def _onchange_body_response_preview(self):
         for record in self:
@@ -137,9 +152,9 @@ class OdooConnectApiLine(models.Model):
                 if not record.fields_ids:
                     record.body_preview = "Please Select Fields"
                 if record.method == 'post':
-                    response_data = '{"ids":[id]}'
+                    response_data = ' {"ids": [id] }'
                 if record.method == 'put' or record.method == 'delete':
-                    response_data = '{"id":id}'
+                    response_data = ' {"id": id }'
             record.response_preview = insert_after(record.response_preview, response_data, '"data":')
 
     def _compute_api_line_description(self):
@@ -162,8 +177,25 @@ class OdooConnectApiLine(models.Model):
                 elif record.report_type == 'pdf':
                     record.description = record.name + " returns the PDF " + record.report_response_type + " that contains the " + record.report_template_name + " report of the model " + record.model_name
 
+    def _create_record_and_check_attach(self, dic, model, ids_list):
+        has_attach = False
+        attach_data = ""
+        if dic.get('attachment'):
+            has_attach = True
+            attach_data = dic.pop('attachment')
+        obj_id = model.create(dic).id
+        ids_list.append(obj_id)
+        if has_attach:
+            self.env['ir.attachment'].create({
+                'type': 'binary',
+                'name': 'ATTACH-%s-' % fields.Date.today().strftime('%Y-%m-%d'),
+                'res_model': self.model_name,
+                'res_id': obj_id,
+                'datas': attach_data,
+            })
+
     def api_action(self, method, user, record_id=None, vals=None):
-        model_obj = self.env[self.model_id.model]
+        model_obj = self.env[self.model_id.model].with_user(user)
         model_fields = self.fields_ids.mapped('name')
         if vals and method != 'GET':
             if vals.get('data'):
@@ -172,13 +204,17 @@ class OdooConnectApiLine(models.Model):
                 for item in vals:
                     filtered_item = {key: format_data(self.model_id, key, item[key]) for key in model_fields if
                                      item.get(key)}
+                    if self.accept_attachment and item.get('attachment'):
+                        filtered_item['attachment'] = item.get('attachment')
                     output_data.append(filtered_item)
                 vals = output_data
             else:
-                vals = {key: format_data(self.model_id, key, vals[key]) for key in model_fields if vals.get(key)}
-        model_obj = model_obj.with_user(user)
+                output_data = {key: format_data(self.model_id, key, vals[key]) for key in model_fields if vals.get(key)}
+                if self.accept_attachment and vals.get('attachment'):
+                    output_data['attachment'] = vals.get('attachment')
+                vals = output_data
         if method == 'GET':
-            domain_list = ast.literal_eval(self.domain)  # convert str to list
+            domain_list = ast.literal_eval(self.domain) if self.domain else []  # convert str to list
             if record_id:
                 return model_obj.browse(record_id).read(model_fields)
             else:
@@ -194,8 +230,23 @@ class OdooConnectApiLine(models.Model):
                     result.append({'total_records': total_records, "total_pages": total_pages})
                 return result
         if method == 'POST':
-            return {'ids': model_obj.create(vals).ids}
+            ids_list = []
+            if isinstance(vals, list):
+                for val in vals:
+                    self._create_record_and_check_attach(val,model_obj,ids_list)
+            else:
+                self._create_record_and_check_attach(vals,model_obj,ids_list)
+            return {'ids': ids_list}
         if method == 'PUT':
+            if self.accept_attachment and vals.get('attachment'):
+                self.env['ir.attachment'].create({
+                    'type': 'binary',
+                    'name': 'ATTACH-%s-' % fields.Date.today().strftime('%Y-%m-%d'),
+                    'res_model': self.model_name,
+                    'res_id': record_id,
+                    'datas': vals.get('attachment'),
+                })
+                vals.pop('attachment')
             model_obj.browse(record_id).update(vals)
             return {'id': record_id}
         if method == 'DELETE':
