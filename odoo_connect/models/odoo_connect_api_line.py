@@ -118,15 +118,17 @@ class OdooConnectApiLine(models.Model):
             if record.method == 'post' or record.method == 'put':
                 if record.body_preview:
                     if record.accept_attachment:
-                        record.body_preview = replace_last(record.body_preview, '\n}',',\n\t"attachment": binary_value\n}')
+                        record.body_preview = replace_last(record.body_preview, '\n}',
+                                                           ',\n\t"attachment": binary_value\n}')
                     else:
-                        record.body_preview = replace_last(record.body_preview,',\n\t"attachment": binary_value\n}','\n}')
-
+                        record.body_preview = replace_last(record.body_preview, ',\n\t"attachment": binary_value\n}',
+                                                           '\n}')
 
     @api.onchange('method', 'fields_ids', 'model_id')
     def _onchange_body_response_preview(self):
         for record in self:
-            record.response_preview = ('{\n"jsonrpc": "2.0",\n"id": id,\n"result": {\n\t"success": "true",\n\t"error": '
+            if record.report_response_type != 'file':
+                record.response_preview = ('{\n"jsonrpc": "2.0",\n"id": id,\n"result": {\n\t"success": "true",\n\t"error": '
                                        '"",\n\t"data":\n\t}\n}')
             response_data = ""
 
@@ -160,7 +162,8 @@ class OdooConnectApiLine(models.Model):
     def _compute_api_line_description(self):
         for record in self:
             if record.method == 'get':
-                fields = 'fields: ' + ', '.join(record.fields_ids.mapped('name')) if record.fields_ids else 'all fields.'
+                fields = 'fields: ' + ', '.join(
+                    record.fields_ids.mapped('name')) if record.fields_ids else 'all fields.'
                 record.description = record.name + '  fetches all the records from the model ' + record.model_name + ' and display them using ' + fields
             elif record.method == 'post':
                 record.description = record.name + " will create new record(s) for the model " + record.model_name + " after providing these fields' values in the body: " + ', '.join(
@@ -233,9 +236,9 @@ class OdooConnectApiLine(models.Model):
             ids_list = []
             if isinstance(vals, list):
                 for val in vals:
-                    self._create_record_and_check_attach(val,model_obj,ids_list)
+                    self._create_record_and_check_attach(val, model_obj, ids_list)
             else:
-                self._create_record_and_check_attach(vals,model_obj,ids_list)
+                self._create_record_and_check_attach(vals, model_obj, ids_list)
             return {'ids': ids_list}
         if method == 'PUT':
             if self.accept_attachment and vals.get('attachment'):
