@@ -12,6 +12,7 @@ from odoo.http import request
 class OdooConnectApiLine(models.Model):
     _name = 'odoo.connect.api.line'
     _description = "Odoo API Line"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(required=True, help="The name used in the URL to call this line from the API")
     title = fields.Char('Title', help="Name of this API line")

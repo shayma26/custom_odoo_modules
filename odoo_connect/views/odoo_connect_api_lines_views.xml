@@ -27,6 +27,7 @@
             <form string="Create API Line" class="responsive-form">
                 <link rel="stylesheet" href="/odoo_connect/static/src/css/responsive.css"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <sheet>
                 <div class="oe_title mb24">
                     <h1>
                         <field name="api_id"/>
@@ -60,22 +61,32 @@
                         <field name="model_name" invisible="1"/>
                         <field name="domain" widget="domain" options="{'model': 'model_name', 'in_dialog': True}"
                                attrs="{'invisible':[('method','!=','get')]}"/>
-                    </group>
-                    <group></group>
-                        <div class="form-preview">
-                            <h5>Request:</h5>
-                            <field name="request_preview" widget="preview"/>
-                            <h5 attrs="{'invisible':['|',('method','=','report'),('method','=','delete')]}">Body:</h5>
-                            <field name="body_preview" widget="preview"
-                                   attrs="{'invisible':['|',('method','=','report'),('method','=','delete')]}"/>
-                            <h5>Response:</h5>
-                            <field name="response_preview" widget="preview"/>
-                        </div>
 
+                    <br/><br/>
+                        <separator/>
+
+                    </group>
+
+                    <group></group>
+                    <div class="form-preview">
+                        <h5>Request:</h5>
+                        <field name="request_preview" widget="preview"/>
+                        <h5 attrs="{'invisible':['|',('method','=','report'),('method','=','delete')]}">Body:</h5>
+                        <field name="body_preview" widget="preview"
+                               attrs="{'invisible':['|',('method','=','report'),('method','=','delete')]}"/>
+                        <h5>Response:</h5>
+                        <field name="response_preview" widget="preview"/>
+                    </div>
 
                 </group>
-
+                </sheet>
+                <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
             </form>
+
         </field>
     </record>
 

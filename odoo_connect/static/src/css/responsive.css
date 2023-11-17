@@ -7,6 +7,11 @@
     position: absolute;
     overflow: auto;
   }
+  .responsive-form{
+     .o_form_sheet_bg .o_form_sheet{
+        overflow: auto;
+    }
+  }
 /* Apply styles for screens smaller than 600 pixels */
 @media only screen and (max-width: 600px) {
     .responsive-form {

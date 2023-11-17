@@ -5,6 +5,7 @@ from odoo import models, fields, api
 class OdooConnectApi(models.Model):
     _name = 'odoo.connect.api'
     _description = "Odoo API"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char('URL Name', required=True, help="The name used in the URL to call API")
     description = fields.Html('Description', help="A brief description of this API: purpose,integration system,...")
