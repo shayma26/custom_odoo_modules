@@ -111,12 +111,10 @@
                 <h2 class="text-xl-center fw-bold">Odoo Connect Screen:</h2>
                 <br/>
                 <div class="container text-center">
-                    <img src="assets/images/api.png" class="img-fluid" alt="Odoo Connect main list">
-                    <br/>
-                    <img src="assets/images/api_lines_tree.png" class="img-fluid" alt="Odoo Connect Lines list">
-                    <br/>
+                    <h4>Instant Changes !</h4>
                     <img src="assets/images/odoo_connect_gif.gif" class="img-fluid" alt="Odoo Connect Workflow">
-                    <br/>
+                    <br/><br/>
+                    <h4>Automatic Documentation !</h4>
                     <img src="assets/images/odoo_connect_doc.png" class="img-fluid" alt="Odoo Connect Documentation">
                 </div>
                 <br/>
@@ -184,1210 +182,128 @@
                                 <div class="tab-content h-100">
                                     <div class="tab-pane active" id="installation">
                                         <h4>Installation</h4>
-                                        <div class="pb-4" style="font-size: 18px;">Once you have downloaded the Odoo Connect app
-                                            from the Odoo app store, you will get a folder name “odoo_connect”.
+                                        <div class="pb-4" style="font-size: 18px;">
+                                            Once you have downloaded the Odoo Connect app from the Odoo app store, you will get a folder name “odoo_connect”.
                                         </div>
-                                        <p>1. Copy and paste it to your Add-ons folder.</p>
-                                        <p>2. Click on Update Apps list from the menu and now Odoo Connect will appear in App
-                                            list.</p>
-                                        <p>3. Go to Apps menu, search for 'odoo connect' and click Install button.</p>
-                                        <p>4. You are ready for use Odoo Connect. </p>
+                                        <p>
+                                            <ol>
+                                                <li>Copy and paste it to your Add-ons folder.</li>
+                                                <li>Click on Update Apps list from the menu and now Odoo Connect will appear in App
+                                                    list.</li>
+                                                <li>Go to Apps menu, search for 'odoo connect' and click Install button.</li>
+                                                <li>You are ready for use Odoo Connect.</li>
+                                            </ol>
+                                        </p>
                                     </div>
-                                    <div class="tab-pane active" id="create_api">
+                                    <div class="tab-pane" id="create_api">
                                         <h4>Create your first API</h4>
                                         <div class="pb-4" style="font-size: 18px;">
                                             Once you launch the application, a tree view showcasing the APIs will be displayed.
                                             To generate a new API, simply click the "Create" button located in the top-left corner of your API screen.
                                         </div>
                                         <div class="pb-1">
-                                            <img src="assets/images/api_action.png" alt="add-item" class="img-fluid">
+                                            <img src="assets/images/odoo_connect_create_api.png" alt="create_api" class="img-fluid">
                                         </div>
                                         <div class="pb-4" style="font-size: 18px;">
                                             Once you've supplied the required information for your API, you can proceed to generate
-                                            the API lines by selecting the "API Line" button located at the top-right corner of your API form.
+                                            the API lines by selecting the "API Lines" button located at the top-right corner of your API form.
                                             You will be directed to the API lines tree associated with your API. From there, you can initiate
                                             the creation process by clicking on the "Create" button.
                                         </div>
                                         <div class="pb-1">
-                                            <img src="assets/images/api_form.png" alt="add-item" class="img-fluid">
+                                            <img src="assets/images/odoo_connect_create_line.png" alt="api_lines" class="img-fluid">
                                         </div>
                                     </div>
                                     <div class="tab-pane" id="authentication">
                                         <h4>Authentication</h4>
-                                        <div class="pb-4" style="font-size: 18px;">Click on the Add Button on the top right corner
-                                            of your Dashboard screen. Once you click on the button, you will be asked to select the
-                                            Dashboard Item Type. There are 10 item types being provided by Dashboard Ninja.
+                                        <div class="pb-4" style="font-size: 18px;">Ensure the security of your data through JWT authentication.
                                         </div>
-                                        <div class="pb-1">
-                                            <img src="" alt="add-item" class="img-fluid">
-                                        </div>
+                                        <p>
+                                            <ul>
+                                                <li>Upon login, a token is generated and remains valid for 24 hours.</li>
+                                                <li>Password reset functionality is available.</li>
+                                                <li>Users can log out to terminate their session.</li>
+                                            </ul>
+                                        </p>
                                     </div>
                                     <div class="tab-pane" id="create">
             
-                                        <h4>Creating a Dashboard Item as a Tile:</h4>
-            
-                                        <p>If you select the Dashboard Item Type as a Tile, pop screen or a dashboard item creation
-                                            window appears which asks you to fill a number of fields. The ones highlighted in purple
-                                            are mandatory to fill,
-                                            model field is the important one in order to save the dashboard item. Once the Model is
-                                            selected, you will notice two configurations further namely Data and Display.
-                                            Data tab will allow users to add/select the data for which they wish to display, whereas
-                                            Display tab will allow a user to configure the dashboard item on the basis of its color,
-                                            layout etc.</p>
-            
-                                        <div class="pb-1">
-                                            <img src="assets/images/sale_order.png" alt="tile-item" class="img-fluid">
-                                        </div>
-                                        <br><br>
-                                        <p>Once the Model is selected, you can define the Domain for the dashboard item if you wish
-                                            to do the same. For Example: If your selected Model is Sale Order, you can define the
-                                            Domain as Sale Order where the total amount is greater than 100.</p>
-                                        <div class="pb-1">
-                                            <img src="assets/images/domain.png" alt="domain" class="img-fluid">
-                                        </div>
-                                        <br><br>
+                                        <h4>Creating Records</h4>
                                         <div class="pb-4" style="font-size: 18px;">
-                                            <p>Once you click on the “Display” tab, you will notice the following configuration
-                                                options</p>
-                                            <li> Layout</li>
-                                            <li> Theme</li>
-                                            <li> Background Color</li>
-                                            <li> Font Color</li>
-                                            <li> Icon Option</li>
-                                            <li> Icon</li>
-                                            <li> Icon Color</li>
+                                            Enable users to create records for a specified model, defining fields that users are allowed to fill.
                                         </div>
+                                        <p><ol>
+                                            <li>Choose the model for record creation.</li>
+                                            <li>Specify fields that users can populate.</li>
+                                            <li>Optionally enable the "accept_attachment" field to allow file attachments to new records.</li>
+                                        </ol></p>
             
-                                        <div class="pb-4" style="font-size: 18px;">
-                                            <b>Layout</b>: Choose the Layout for your dashboard item from the 6 available sets i.e
-                                            Layout 1, Layout 2, Layout 3, Layout 4, Layout 5, Layout 6 as per your requirement.
-                                        </div>
                                         <div class="pb-1">
-                                            <div class="col-xs-12">
-                                                <div class="d-flex justify-content-between flex-wrap ">
-                                                    <img src="assets/images/layout1.png" alt="layout" class="h-80"
-                                                         style="width: 200px;">
-                                                    <img src="assets/images/layout2.png" alt="layout" class="h-80"
-                                                         style="width: 200px;">
-                                                    <img src="assets/images/layout3.png" alt="layout" class="h-80"
-                                                         style="width: 200px;">
-                                                    <img src="assets/images/layout4.png" alt="layout" class="h-80"
-                                                         style="width: 200px;">
-                                                    <img src="assets/images/layout5.png" alt="layout" class="h-80"
-                                                         style="width: 200px;">
-                                                    <img src="assets/images/layout6.png" alt="layout" class="h-80"
-                                                         style="width: 200px;">
-                                                </div>
-                                            </div>
+                                            <img src="assets/images/odoo_connect_create_method.png" alt="api line with post method" class="img-fluid">
                                         </div>
-                                        <div class="pb-1">
-                                            <img src="assets/images/sale_order2.png" alt="" class="img-fluid">
-                                        </div>
-                                        <div class="pb-4" style="font-size: 18px">
-                                            <b>Theme</b>: It is a pre configured set of 5 different colors i.e White, Blue, Green,
-                                            Red and Yellow.
-                                        </div>
-                                        <p>Select the Theme as per your choice. If you wish to choose your own color, you can do the
-                                            same through Background Color. You can even change the Transparency of the chosen color,
-                                            you can also change the Font Color of the dashboard item and adjust its Transparency as
-                                            per your choice.</p>
-                                        <div class="pb-1">
-                                            <img src="assets/images/sale_order3.png" alt="" class="img-fluid">
-                                        </div>
-            
-                                        <div class="pb-4" style="font-size: 18px">
-                                            <b>Icon</b>: We have provided 29 pre-loaded icons of Font Awesome 4.7.0.
-                                        </div>
-                                        <p>Choose the icon for your dashboard item. If you wish to choose from our Default Icons,
-                                            choose the Default Icons option and if you wish to upload your own, choose Upload Icon
-                                            option.</p>
-                                        <p>If you have chosen the Default Icons option, the below pop-up window will be displayed.
-                                            Choose the icon you like and if you wish to explore more icons, search them in the
-                                            search bar.</p>
-                                        <div class="pb-1">
-                                            <img src="assets/images/select_icons.png" alt="" class="img-fluid">
-                                        </div>
-                                        <div class="pb-4" style="font-size: 18px">
-                                            <b>Icon</b>: Option provided to choose the Icon Color for your dashboard item and adjust
-                                            the Transparency accordingly.
-                                        </div>
-                                        <p>See the Preview of your finished dashboard item. If you like what you see, proceed to
-                                            save the same.</p>
-                                        <div class="pb-1">
-                                            <img src="assets/images/sale_order4.png" alt="" class="img-fluid">
-                                        </div>
-                                        <table class="table table-bordered mt-4 table-responsive">
-                                            <thead class="text-center bg-light">
-                                            <tr>
-                                                <th>Category</th>
-                                                <th>Label</th>
-                                                <th>Description</th>
-                                                <th>Condition</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="font-14">
-                                            <tr>
-                                                <td rowspan="5" class="align-middle text-center">General</td>
-                                                <td>Name</td>
-                                                <td>Label which will be displayed on the tile</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Model</td>
-                                                <td>Select the model/table on which you want to create your item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Company</td>
-                                                <td>Display tile to particular company</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Type</td>
-                                                <td>Select the type as Tile</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preview</td>
-                                                <td>Live Preview of the Tile</td>
-                                                <td></td>
-                                            </tr>
-            
-                                            <tr>
-                                                <td rowspan="8" class="align-middle text-center">Data</td>
-                                                <td>Record Type</td>
-                                                <td>Allows you to show your data/record as a Count, Sum or Average</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Record Field</td>
-                                                <td>Allow you to select the field on which to apply the sum or average operation
-                                                </td>
-                                                <td>It will only visible when Record Type is Sum or Average</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Record Value</td>
-                                                <td>Display exact value depending upon selected Record Type and Record Field</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Domain</td>
-                                                <td>Allow you to add conditions to filter out your Data</td>
-                                                <td>This odoo default widget is only availabel in Odoo 11, 12 version. Odoo 10
-                                                    customer will need technical knowledge to add conditions.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Field</td>
-                                                <td>Field on which date filter will work</td>
-                                                <td>Only date fields will be displayed</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Selection</td>
-                                                <td>Select the Date filter for which you want to filter out the your item
-                                                    records/data
-                                                </td>
-                                                <td>If None option is selected then only Main Dashboard page date filter will
-                                                    work.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Start Date</td>
-                                                <td>Option to set start date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td>End Date</td>
-                                                <td>Option to set end date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="6" class="align-middle text-center">Display</td>
-                                                <td>Theme</td>
-                                                <td>Pre configured set of 5 different colors i.e White, Blue, Green, Red and Yellow.
-                                                    Select the Theme as per your choice
-                                                </td>
-                                                <td>Get overridens if custom values are set in Background Color, Font Color & Icon
-                                                    Color
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Background Color</td>
-                                                <td>Allows you to set the background color from a color pop-up window. Also provides
-                                                    option to set transparency.
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Font Color</td>
-                                                <td>Allows you to set the font color from a color pop-up window. Also provides
-                                                    option to set transparency.
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="align-middle">Icon Option</td>
-                                                <td class="p-0">
-                                                    <table class="w-100">
-                                                        <tr>
-                                                            <td>Allows you to choose the icon from a pop-up window.</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Allows you to upload your custom icon.</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="p-0">
-                                                    <table class="w-100 text-center">
-                                                        <tr>
-                                                            <td>Default Icons</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Upload Icon</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Icon</td>
-                                                <td>We have provided 29 pre-loaded Default Font Awesome 4.7.0 icons</td>
-                                                <td>Use search bar to search for other available Font Awesome icons.</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Icon Color</td>
-                                                <td>Allows you to choose the color of the icon. Also, provides option to set
-                                                    transparency.
-                                                </td>
-                                                <td>Only visible when Icon Option chosen as Default</td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="5" class="align-middle text-center">Actions</td>
-                                                <td>Client Action</td>
-                                                <td>Allow you to choose client Client Action field
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>client Action Field</td>
-                                                <td>Allows you to set the action of the item</td>
-                                                <td>Only visible when client action is selected</td>
-                                            </tr>
-                                            <tr>
-                                                <td>client Action Field</td>
-                                                <td>Allows you to set the client action on the item, chosen by the client</td>
-                                                <td>Only visible when client action is selected</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Item Action</td>
-                                                <td>Allows you to set the action of the item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Show record</td>
-                                                <td>Allow you to see the records on performing action on the item</td>
-                                                <td>Item must be save to reflect the changes</td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="3" class="align-middle text-center">Auto Update</td>
-                                                <td class="align-middle">Auto live update type</td>
-                                                <td class="p-0">
-                                                    <table class="w-100">
-                                                        <tr>
-                                                            <td>Allows you to choose the show live update pop up</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Allows you to choose set update interval</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="p-0">
-                                                    <table class="w-100 text-center">
-                                                        <tr>
-                                                            <td>Update at live instance</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Update it after selected interval</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Show live update pop up</td>
-                                                <td>Allow you to see the notification pop of live updates of records</td>
-                                                <td>Update at live instance must be activated</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Set update interval</td>
-                                                <td>Allow you to select the the interval to update the data</td>
-                                                <td>Update it after selected interval must be selected</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-            
+                                        
                                     </div>
                                     <div class="tab-pane" id="fetch">
-                                        <h4>Creating a Dashboard Item as a Bar Chart:</h4>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart/bar_chart_preview.png" alt="tile-item"
-                                                 class="img-fluid">
-                                        </div>
+                                        <h4>Reading Records</h4>
                                         <div class="pb-4" style="font-size: 18px;">
-                                            If you select the Dashboard Item Type as a Bar Chart, three important fields will be
-                                            displayed on selecting the model i.e
-                                            <li>Measures</li>
-                                            <li>Line Measure</li>
-                                            <li>Data Type</li>
+                                            Retrieve records from a specified model with flexibility in choosing fields, applying data filters (domains), and sorting results.
                                         </div>
-            
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart.png" alt="tile-item" class="img-fluid">
-                                        </div>
-                                        <div class="pb-4" style="font-size: 18px;">
-                                            Measures and Line Measure field will allow the user to select multiple values and
-                                            corresponding to the selected fields dataset will start displaying for them.
-                                        </div>
-                                        <p>For example: Let’s select the Model as Sales Order and keep its Measures as Total
-                                            (sale.order), Taxes (sale.order) and Untaxed Amount(sale.order) and Line Measure as
-                                            Taxes (sale.order) and Untaxed Amount (sale.order) and Currency Rate (sale.order)</p>
-                                        <p>Measures and Line Measure will show list of fields related to the chosen model on the
-                                            basis of following attributes:
-                                        <li> Type: Integer, Float or Monitory</li>
-                                        <li>Store: True i.e. this field value must be stored in the database</li>
+                                        <p>
+                                            <ol>
+                                                <li>Select the desired model for reading records.</li>
+                                                <li>Choose specific fields to display.</li>
+                                                <li>Apply data filters using domains.</li>
+                                                <li>Sort results based on user preferences.</li>
+                                            </ol>
                                         </p>
-                                        <div class="pb-4" style="font-size: 18px;"><b>NOTE: Field name “id” is not allowed to show
-                                            explicitly.</b></div>
-                                        <p>Once you select the Data Type as Sum, Count or Average, it will start displaying the data
-                                            respectively.</p>
                                         <div class="pb-1">
-                                            <img src="assets/images/bar_chart2.png" alt="domain" class="img-fluid">
+                                            <img src="assets/images/odoo_connect_get_method.png" alt="" class="img-fluid">
                                         </div>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart3.png" alt="domain" class="img-fluid">
-                                        </div>
-                                        <div class="pb-4" style="font-size: 18px;">
-                                            You will notice the following configuration options under <b>Group/Dimensions</b> tab.
-                                            <li> Group By</li>
-                                            <li> Sub Group By</li>
-                                            <li> Sort By Field</li>
-                                            <li> Sort Order</li>
-                                            <li> Record Limit</li>
-                                        </div>
-                                        <div class="pb-4" style="font-size: 18px;">
-                                            <b>NOTE: Group By and Sub Group By field allows you to group your selected Measure field
-                                                data.</b>
-                                        </div>
-                                        <div class="pb-4" style="font-size: 18px;">
-                                            While selecting the Group By or Sub Group By field, if you select the field type as <b>Date/Datetime
-                                            Type</b>, then you will notice a new field start displaying, i.e <b>“ Group By Date/Sub
-                                            Group By Date ”</b>
-                                        </div>
-                                        <div class="pb-4" style="font-size: 18px;">
-                                            Group By Date/Sub Group By Date field will allow you to group your data as per the
-                                            options available.
-                                            <li> Day</li>
-                                            <li> Week</li>
-                                            <li> Month</li>
-                                            <li> Quarter</li>
-                                            <li> Year</li>
-                                        </div>
-                                        <p>Select the Sub Group By field to further group your Group By field data, for example:
-                                            let’s select the Group By as Company (sale.order).</p>
-                                        <p>You can also select the Sort By Field, Sort Order, and Record Limit option specific to
-                                            the dashboard item you’re currently making</p>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart4.png" alt="" class="img-fluid">
-                                        </div>
-                                        <p>You also have the feature of defining the Chart Color Palette for your dashboard item
-                                            under Display tab, there are four predefined options i.e. Default, Cool, Warm and
-                                            Neon.</p>
-                                        <p>The same can also be defined from the main dashboard by clicking at the brush icon named
-                                            Color Palette on each individual dashboard item whose type is charts.</p>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart5.png" alt="" class="img-fluid">
-                                        </div>
-            
-                                        <div class="pb-4" style="font-size: 18px">
-                                            You can notice that there is another option available besides the Dashboard item preview
-                                            “Stacked Bar Chart” by checking this box, you can view your data for a Dashboard item as
-                                            shown below
-                                        </div>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart6.png" alt="" class="img-fluid">
-                                        </div>
-                                        <div class="pb-4" style="font-size: 18px">
-                                            If you select your Group By field as Date Type, for example: Let’s select the Group By
-                                            field as a “Creation Date”, you will notice a Target tab will appear besides the Data
-                                            and Displays tabs.
-                                        </div>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart7.png" alt="" class="img-fluid">
-                                        </div>
-                                        <div class="pb-4" style="fon-size: 18px">
-                                            If you click on Target tab, you will be able to see the Enable Target option on
-                                            activating it, you will notice the new configurations menus to set the Targets for your
-                                            data as per your need.
-                                        </div>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart8.png" alt="" class="img-fluid">
-                                        </div>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart9.png" alt="" class="img-fluid">
-                                        </div>
-                                        <div class="pb-4" style="font-size: 18px">
-                                            If you enable the option, “Show Target as Line”, it will start showing the target as a
-                                            Line.
-                                        </div>
-                                        <p>If you input the value for “Standard Target” option, then you will be able to view your
-                                            Data target as per the input the value, as shown above screenshot.</p>
-                                        <p>If you wish to see the target with different data and date range, then you need to add
-                                            them by clicking on “Add Line”. on clicking the Add Line, you will be asked to select
-                                            the Date and the value for which you want to see the target.</p>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart10.png" alt="" class="img-fluid">
-                                        </div>
-                                        <p>You can add multiple lines to see the target values as per your need.</p>
-                                        <div class="pb-1">
-                                            <img src="assets/images/bar_chart11.png" alt="" class="img-fluid">
-                                        </div>
-                                        <p>Once all the mandatory details are filled, you can preview your dashboard item in the
-                                            Preview column and if everything looks good, then proceed to save.</p>
-            
-                                        <table class="table table-bordered mt-4 table-responsive">
-                                            <thead class="text-center bg-light">
-                                            <tr>
-                                                <th>Category</th>
-                                                <th>Label</th>
-                                                <th>Description</th>
-                                                <th>Condition</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="font-14">
-                                            <tr>
-                                                <td rowspan="6" class="align-middle text-center">General</td>
-                                                <td>Name</td>
-                                                <td>Label which will be displayed on header of item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Model</td>
-                                                <td>Select the model/table on which you want to create your item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Company</td>
-                                                <td>Display Bar Chart to particular company</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Type</td>
-                                                <td>Select the type as Bar Chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Stacked Bar Chart</td>
-                                                <td>Option to convert bar chart in stacked bar chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preview</td>
-                                                <td>Live Preview of the Bar Chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="15" class="align-middle text-center">Data</td>
-                                                <td>Measures</td>
-                                                <td>Allows you to select the fields for which you want to perform the calculations
-                                                    as per the selected Model
-                                                </td>
-                                                <td>Only visible when Data type is Sum or Average</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Line Measure</td>
-                                                <td>Allows you to select the fields for which you want to display lines on bar
-                                                    chart
-                                                </td>
-                                                <td>Only visible when Data type is Sum or Average</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Data Type</td>
-                                                <td>Allows you to display your data as Sum, Count or Average</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group By</td>
-                                                <td>Allows you to group your selected Measure fields data</td>
-                                                <td>Enables Target tab if Date/Datetime field is selected</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group By Date</td>
-                                                <td>Allows you to select the date option by which you wish to group the data as per
-                                                    selected date type group by field. Options are Day, Week, Month, Quarter, Year.
-                                                </td>
-                                                <td>Only visible when date/datetime field is chosen in Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sub Group By</td>
-                                                <td>Allows you to further group your Group By field data.</td>
-                                                <td>Only visible when date/datetime field is chosen in Sub Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sub Group By Date</td>
-                                                <td>Allows you to select the date option by which you wish to group the grouped data
-                                                    as per selected date type sub group by field. Options are Day, Week, Month,
-                                                    Quarter, Year.
-                                                </td>
-                                                <td>It will only visible when Sub Group By is chosen date time field</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sort By Field</td>
-                                                <td>It will allow you to select the field on which you want to sort the
-                                                    records/Data
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sort Order</td>
-                                                <td>Allows you to sort your data in Ascending or Descending order</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Record Limit</td>
-                                                <td>Allows you to set limit to your records/data</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Domain</td>
-                                                <td>Allows you to add conditions to filter out your Data</td>
-                                                <td>This odoo default widget is only availabel in Odoo 11, 12 version. Odoo 10
-                                                    customer will need technical knowledge to add conditions.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Field</td>
-                                                <td>Field on which date filter will work</td>
-                                                <td>Only date fields will be displayed</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Selection</td>
-                                                <td>Select the Date filter for which you want to filter out the your item
-                                                    records/data
-                                                </td>
-                                                <td>If None option is selected then only Main Dashboard page date filter will
-                                                    work.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Start Date</td>
-                                                <td>Option to set start date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td>End Date</td>
-                                                <td>Option to set end date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="align-middle text-center">Display</td>
-                                                <td>Chart Color Palette</td>
-                                                <td>It will allow you to select the color from 4 pre-defined options i.e Default,
-                                                    Cool, Warm and Neon
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="5" class="align-middle text-center">Target</td>
-                                                <td>Enable Target</td>
-                                                <td>On enabiling the option, you will be able to see the Target values</td>
-                                                <td>Target tab is only visible when Date/Datetime field is selected in Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Show Target as Line</td>
-                                                <td>Allows you to set your target values which you wish to see as a line on chart.
-                                                </td>
-                                                <td>Visible only when you enables the Enable Target</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Standard Target</td>
-                                                <td>Default target value if any value is empty for particular date period</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date</td>
-                                                <td>Allows you to set the Date on which you wish to see your Target values.</td>
-                                                <td>Visible only when you check the Enable Target option</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Value</td>
-                                                <td>Allows you to set the Target value respective to the date.</td>
-                                                <td>Visible only when you check the Enable Target option</td>
-                                            </tr>
-            
-                                            <tr>
-                                                <td rowspan="4" class="align-middle text-center">Actions</td>
-                                                <td> Action lines</td>
-                                                <td>Allow you to choose different data at a time to perform action, to go in deep
-                                                    ypou can choose number of lines as per your need
-                                                </td>
-                                                <td>This field is applicable on every type except tile,kpi and list</td>
-                                            </tr>
-                                            <tr>
-                                                <td>client Action Field</td>
-                                                <td>Allows you to set the client action on the item, chosen by the client</td>
-                                                <td>Only visible when client action is selected</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Item Action</td>
-                                                <td>Allows you to set the action of the item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Show record</td>
-                                                <td>Allow you to see the records on performing action on the item</td>
-                                                <td>Item must be save to reflect the changes</td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="3" class="align-middle text-center">Auto Update</td>
-                                                <td class="align-middle">Auto live update type</td>
-                                                <td class="p-0">
-                                                    <table class="w-100">
-                                                        <tr>
-                                                            <td>Allows you to choose the show live update pop up</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Allows you to choose set update interval</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="p-0">
-                                                    <table class="w-100 text-center">
-                                                        <tr>
-                                                            <td>Update at live instance</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Update it after selected interval</td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Show live update pop up</td>
-                                                <td>Allow you to see the notification pop of live updates of records</td>
-                                                <td>Update at live instance must be activated</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Set update interval</td>
-                                                <td>Allow you to select the the interval to update the data</td>
-                                                <td>Update it after selected interval must be selected</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
                                     </div>
                                     <div class="tab-pane" id="update">
-                                        <h4>Creating a Dashboard Item as a Horizontal Bar Chart:</h4>
-                                        <div class="pb-4" style="font-size: 18px;"> If you select the Dashboard Item Type as
-                                            Horizontal Bar Chart and follow the steps as mentioned above for the Bar Chart, the
-                                            final result would be displayed as the following:
+                                        <h4>Updating Records</h4>
+                                        <div class="pb-4" style="font-size: 18px;">Facilitate record editing for a specified model, specifying editable fields for users.
                                         </div>
+                                        <p>
+                                            <ol>
+                                                <li>Select the model for record editing.</li>
+                                                <li>Define fields that users have the right to modify.</li>
+                                                <li>Optionally enable the "accept_attachment" field to permit file attachments during record updates.</li>
+                                            </ol>
+                                        </p>
                                         <div class="pb-1">
-                                            <img src="assets/images/horizontal_bar.png" alt="" class="img-fluid">
+                                            <img src="assets/images/odoo_connect_put_method.png" alt="" class="img-fluid">
                                         </div>
-                                        <table class="table table-bordered mt-4 table-responsive">
-                                            <thead class="text-center bg-light">
-                                            <tr>
-                                                <th>Category</th>
-                                                <th>Label</th>
-                                                <th>Description</th>
-                                                <th>Condition</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="font-14">
-                                            <tr>
-                                                <td rowspan="6" class="align-middle text-center">General</td>
-                                                <td>Name</td>
-                                                <td>Label which will be displayed on header of item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Model</td>
-                                                <td>Select the model/table on which you want to create your item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Company</td>
-                                                <td>Display Horizontal Bar Chart to particular company</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Type</td>
-                                                <td>Select the type as Horizontal Bar Chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Stacked Bar Chart</td>
-                                                <td>Option to convert Horizontal Bar Chart in stacked bar chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preview</td>
-                                                <td>Live Preview of the Horizontal Bar Chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="15" class="align-middle text-center">Data</td>
-                                                <td>Measures</td>
-                                                <td>Allows you to select the fields for which you want to perform the calculations
-                                                    as per the selected Model
-                                                </td>
-                                                <td>Only visible when Data type is Sum or Average</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Line Measure</td>
-                                                <td>Allows you to select the fields for which you want to display lines on bar
-                                                    chart
-                                                </td>
-                                                <td>Only visible when Data type is Sum or Average</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Data Type</td>
-                                                <td>Allows you to display your data as Sum, Count or Average</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group By</td>
-                                                <td>Allows you to group your selected Measure fields data</td>
-                                                <td>Enables Target tab if Date/Datetime field is selected</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group By Date</td>
-                                                <td>Allows you to select the date option by which you wish to group the data as per
-                                                    selected date type group by field. Options are Day, Week, Month, Quarter, Year.
-                                                </td>
-                                                <td>Only visible when date/datetime field is chosen in Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sub Group By</td>
-                                                <td>Allows you to further group your Group By field data.</td>
-                                                <td>Only visible when date/datetime field is chosen in Sub Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sub Group By Date</td>
-                                                <td>Allows you to select the date option by which you wish to group the grouped data
-                                                    as per selected date type sub group by field. Options are Day, Week, Month,
-                                                    Quarter, Year.
-                                                </td>
-                                                <td>It will only visible when Sub Group By is chosen date time field</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sort By Field</td>
-                                                <td>It will allow you to select the field on which you want to sort the
-                                                    records/Data
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sort Order</td>
-                                                <td>Allows you to sort your data in Ascending or Descending order</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Record Limit</td>
-                                                <td>Allows you to set limit to your records/data</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Domain</td>
-                                                <td>Allows you to add conditions to filter out your Data</td>
-                                                <td>This odoo default widget is only availabel in Odoo 11, 12 version. Odoo 10
-                                                    customer will need technical knowledge to add conditions.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Field</td>
-                                                <td>Field on which date filter will work</td>
-                                                <td>Only date fields will be displayed</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Selection</td>
-                                                <td>Select the Date filter for which you want to filter out the your item
-                                                    records/data
-                                                </td>
-                                                <td>If None option is selected then only Main Dashboard page date filter will
-                                                    work.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Start Date</td>
-                                                <td>Option to set start date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td>End Date</td>
-                                                <td>Option to set end date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="align-middle text-center">Display</td>
-                                                <td>Chart Color Palette</td>
-                                                <td>It will allow you to select the color from 4 pre-defined options i.e Default,
-                                                    Cool, Warm and Neon
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="5" class="align-middle text-center">Target</td>
-                                                <td>Enable Target</td>
-                                                <td>On enabiling the option, you will be able to see the Target values</td>
-                                                <td>Target tab is only visible when Date/Datetime field is selected in Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Show Target as Line</td>
-                                                <td>Allows you to set your target values which you wish to see as a line on chart.
-                                                </td>
-                                                <td>Visible only when you enables the Enable Target</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Standard Target</td>
-                                                <td>Default target value if any value is empty for particular date period</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date</td>
-                                                <td>Allows you to set the Date on which you wish to see your Target values.</td>
-                                                <td>Visible only when you check the Enable Target option</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Value</td>
-                                                <td>Allows you to set the Target value respective to the date.</td>
-                                                <td>Visible only when you check the Enable Target option</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
                                     </div>
                                     <div class="tab-pane" id="delete">
-                                        <h4>Creating a Dashboard Item as a Line Chart:</h4>
-                                        <div class="pb-4" style="font-size: 18px;"> If you select the Dashboard Item Type as Line
-                                            Chart and follow the steps as mentioned above for the Bar Chart, the final result would
-                                            be displayed as the following:
+                                        <h4>Deleting Records</h4>
+                                        <div class="pb-4" style="font-size: 18px;">Grant users the authority to delete records for specified models.
                                         </div>
                                         <div class="pb-1">
-                                            <img src="assets/images/line.png" alt="" class="img-fluid">
+                                            <img src="assets/images/odoo_connect_delete_method.png" alt="" class="img-fluid">
                                         </div>
-                                        <table class="table table-bordered mt-4 table-responsive">
-                                            <thead class="text-center bg-light">
-                                            <tr>
-                                                <th>Category</th>
-                                                <th>Label</th>
-                                                <th>Description</th>
-                                                <th>Condition</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="font-14">
-                                            <tr>
-                                                <td rowspan="5" class="align-middle text-center">General</td>
-                                                <td>Name</td>
-                                                <td>Label which will be displayed on header of item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Model</td>
-                                                <td>Select the model/table on which you want to create your item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Company</td>
-                                                <td>Display Line Chart to particular company</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Type</td>
-                                                <td>Select the type as Line Chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preview</td>
-                                                <td>Live Preview of the Line Chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="14" class="align-middle text-center">Data</td>
-                                                <td>Measures</td>
-                                                <td>Allows you to select the fields for which you want to perform the calculations
-                                                    as per the selected Model
-                                                </td>
-                                                <td>Only visible when Data type is Sum or Average</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Data Type</td>
-                                                <td>Allows you to display your data as Sum, Count or Average</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group By</td>
-                                                <td>Allows you to group your selected Measure fields data</td>
-                                                <td>Enables Target tab if Date/Datetime field is selected</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group By Date</td>
-                                                <td>Allows you to select the date option by which you wish to group the data as per
-                                                    selected date type group by field. Options are Day, Week, Month, Quarter, Year.
-                                                </td>
-                                                <td>Only visible when date/datetime field is chosen in Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sub Group By</td>
-                                                <td>Allows you to further group your Group By field data.</td>
-                                                <td>Only visible when date/datetime field is chosen in Sub Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sub Group By Date</td>
-                                                <td>Allows you to select the date option by which you wish to group the grouped data
-                                                    as per selected date type sub group by field. Options are Day, Week, Month,
-                                                    Quarter, Year.
-                                                </td>
-                                                <td>It will only visible when Sub Group By is chosen date time field</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sort By Field</td>
-                                                <td>It will allow you to select the field on which you want to sort the
-                                                    records/Data
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sort Order</td>
-                                                <td>Allows you to sort your data in Ascending or Descending order</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Record Limit</td>
-                                                <td>Allows you to set limit to your records/data</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Domain</td>
-                                                <td>Allows you to add conditions to filter out your Data</td>
-                                                <td>This odoo default widget is only availabel in Odoo 11, 12 version. Odoo 10
-                                                    customer will need technical knowledge to add conditions.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Field</td>
-                                                <td>Field on which date filter will work</td>
-                                                <td>Only date fields will be displayed</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Selection</td>
-                                                <td>Select the Date filter for which you want to filter out the your item
-                                                    records/data
-                                                </td>
-                                                <td>If None option is selected then only Main Dashboard page date filter will
-                                                    work.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Start Date</td>
-                                                <td>Option to set start date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td>End Date</td>
-                                                <td>Option to set end date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="align-middle text-center">Display</td>
-                                                <td>Chart Color Palette</td>
-                                                <td>It will allow you to select the color from 4 pre-defined options i.e Default,
-                                                    Cool, Warm and Neon
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="4" class="align-middle text-center">Target</td>
-                                                <td>Enable Target</td>
-                                                <td>On enabiling the option, you will be able to see the Target values</td>
-                                                <td>Target tab is only visible when Date/Datetime field is selected in Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Standard Target</td>
-                                                <td>Default target value if any value is empty for particular date period</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date</td>
-                                                <td>Allows you to set the Date on which you wish to see your Target values.</td>
-                                                <td>Visible only when you check the Enable Target option</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Value</td>
-                                                <td>Allows you to set the Target value respective to the date.</td>
-                                                <td>Visible only when you check the Enable Target option</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <p>
+                                            <ol>
+                                                <li>Identify the model for which users have deletion rights.</li>
+                                                <li>Users can delete records as per their permissions.</li>
+                                            </ol>
+                                        </p>
                                     </div>
                                     <div class="tab-pane" id="report">
-                                        <h4>Creating a Dashboard Item as a Line Chart:</h4>
-                                        <div class="pb-4" style="font-size: 18px;"> If you select the Dashboard Item Type as Line
-                                            Chart and follow the steps as mentioned above for the Bar Chart, the final result would
-                                            be displayed as the following:
+                                        <h4>Reporting</h4>
+                                        <div class="pb-4" style="font-size: 18px;"> Generate PDF or Excel reports for specified models.
                                         </div>
                                         <div class="pb-1">
-                                            <img src="assets/images/line.png" alt="" class="img-fluid">
+                                            <img src="assets/images/odoo_connect_report_method.png" alt="" class="img-fluid">
                                         </div>
-                                        <table class="table table-bordered mt-4 table-responsive">
-                                            <thead class="text-center bg-light">
-                                            <tr>
-                                                <th>Category</th>
-                                                <th>Label</th>
-                                                <th>Description</th>
-                                                <th>Condition</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="font-14">
-                                            <tr>
-                                                <td rowspan="5" class="align-middle text-center">General</td>
-                                                <td>Name</td>
-                                                <td>Label which will be displayed on header of item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Model</td>
-                                                <td>Select the model/table on which you want to create your item</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Company</td>
-                                                <td>Display Line Chart to particular company</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Type</td>
-                                                <td>Select the type as Line Chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Preview</td>
-                                                <td>Live Preview of the Line Chart</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="14" class="align-middle text-center">Data</td>
-                                                <td>Measures</td>
-                                                <td>Allows you to select the fields for which you want to perform the calculations
-                                                    as per the selected Model
-                                                </td>
-                                                <td>Only visible when Data type is Sum or Average</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Data Type</td>
-                                                <td>Allows you to display your data as Sum, Count or Average</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group By</td>
-                                                <td>Allows you to group your selected Measure fields data</td>
-                                                <td>Enables Target tab if Date/Datetime field is selected</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Group By Date</td>
-                                                <td>Allows you to select the date option by which you wish to group the data as per
-                                                    selected date type group by field. Options are Day, Week, Month, Quarter, Year.
-                                                </td>
-                                                <td>Only visible when date/datetime field is chosen in Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sub Group By</td>
-                                                <td>Allows you to further group your Group By field data.</td>
-                                                <td>Only visible when date/datetime field is chosen in Sub Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sub Group By Date</td>
-                                                <td>Allows you to select the date option by which you wish to group the grouped data
-                                                    as per selected date type sub group by field. Options are Day, Week, Month,
-                                                    Quarter, Year.
-                                                </td>
-                                                <td>It will only visible when Sub Group By is chosen date time field</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sort By Field</td>
-                                                <td>It will allow you to select the field on which you want to sort the
-                                                    records/Data
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sort Order</td>
-                                                <td>Allows you to sort your data in Ascending or Descending order</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Record Limit</td>
-                                                <td>Allows you to set limit to your records/data</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Domain</td>
-                                                <td>Allows you to add conditions to filter out your Data</td>
-                                                <td>This odoo default widget is only availabel in Odoo 11, 12 version. Odoo 10
-                                                    customer will need technical knowledge to add conditions.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Field</td>
-                                                <td>Field on which date filter will work</td>
-                                                <td>Only date fields will be displayed</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date Filter Selection</td>
-                                                <td>Select the Date filter for which you want to filter out the your item
-                                                    records/data
-                                                </td>
-                                                <td>If None option is selected then only Main Dashboard page date filter will
-                                                    work.
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Start Date</td>
-                                                <td>Option to set start date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td>End Date</td>
-                                                <td>Option to set end date for custom date filter</td>
-                                                <td>Only visible when Date filter selection is set to Custom Filter</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="align-middle text-center">Display</td>
-                                                <td>Chart Color Palette</td>
-                                                <td>It will allow you to select the color from 4 pre-defined options i.e Default,
-                                                    Cool, Warm and Neon
-                                                </td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td rowspan="4" class="align-middle text-center">Target</td>
-                                                <td>Enable Target</td>
-                                                <td>On enabiling the option, you will be able to see the Target values</td>
-                                                <td>Target tab is only visible when Date/Datetime field is selected in Group By</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Standard Target</td>
-                                                <td>Default target value if any value is empty for particular date period</td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Date</td>
-                                                <td>Allows you to set the Date on which you wish to see your Target values.</td>
-                                                <td>Visible only when you check the Enable Target option</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Value</td>
-                                                <td>Allows you to set the Target value respective to the date.</td>
-                                                <td>Visible only when you check the Enable Target option</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
+                                        <p>
+                                            <ol>
+                                                <li>Choose the report format (PDF or Excel).</li>
+                                                <li>For PDF reports, select from available templates related to the specified model.</li>
+                                                <li>For Excel reports, customize fields to include in the report.</li>
+                                                <li>Opt for either a downloadable file or a JSON response containing the file's URL.</li>
+                                            </ol>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
