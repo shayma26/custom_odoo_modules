@@ -83,7 +83,7 @@ pre[class*=language-]{
     div.code-toolbar>.toolbar{
     position:absolute;
     top:0em;
-    right:1%;
+    right:12%;
     transition:opacity .3s ease-in-out;
     opacity:0
     }

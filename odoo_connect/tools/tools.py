@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
+import secrets
 
 
 def format_data(model_obj, key, value):
@@ -51,3 +52,8 @@ def insert_after(s, insert, after):
         return s[:index + len(after)] + insert + s[index + len(after):]
     else:
         return s
+
+
+def generate_token():
+    # Generate a random token (hexadecimal)
+    return secrets.token_hex(16)

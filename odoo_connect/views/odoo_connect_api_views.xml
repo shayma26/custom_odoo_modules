@@ -16,17 +16,23 @@
                             class="btn-primary"
                             string="Preview"
                             type="object"/>
+
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                            <button name="%(odoo_connect_lines_action)d" string="API Lines" type="action"
-                                    icon="fa-bars"
-                                    help="Display API Lines list" class="oe_stat_button"/>
+                        <button name="%(odoo_connect_lines_action)d" string="API Lines" type="action"
+                                icon="fa-bars"
+                                help="Display API Lines list" class="oe_stat_button"/>
+                        <button class="oe_stat_button" name="website_publish_button"
+                            type="object" icon="fa-globe" string="Publish">
+                        <field name="website_published" widget="website_button"/>
+                        </button>
                     </div>
                     <group>
                         <field name="name" placeholder='e.g: "system_integration_api"'/>
                         <field name="description" style="width:70%%"/>
                         <field name="version"/>
+
                     </group>
                 </sheet>
                 <div class="oe_chatter">

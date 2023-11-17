@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
+from odoo.http import request
+from ..tools.tools import generate_token
 
 
 class OdooConnectApi(models.Model):
     _name = 'odoo.connect.api'
     _description = "Odoo API"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'website.published.mixin']
 
     name = fields.Char('URL Name', required=True, help="The name used in the URL to call API")
     description = fields.Html('Description', help="A brief description of this API: purpose,integration system,...")
@@ -27,9 +29,15 @@ class OdooConnectApi(models.Model):
             vals['name'] = vals.get('name').replace(" ", "_")
         return super().write(vals)
 
+
     def action_preview(self):
-        return {
+        response = {
             'type': 'ir.actions.act_url',
             'target': 'new',
-            'url': '/documentation/%s' % self.id,
+            'url': '/documentation/%s' % self.id
         }
+        if not self.is_published:
+            token = generate_token()
+            response['url'] = response['url'] + "?token=%s" % token
+            request.session['token'] = token
+        return response

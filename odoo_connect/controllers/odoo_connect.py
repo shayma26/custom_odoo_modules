@@ -17,8 +17,11 @@ class RestAPICustomController(http.Controller):
         }
         try:
             get_api = request.env['odoo.connect.api'].search([('name', '=', api_name)])
+            if not get_api.is_published:
+                res['error'] = 'API is not available now'
+                return res
             result = get_api.api_line_ids.filtered(
-                lambda rec: rec.name == name and rec.method == 'report' and rec.report_response_type == 'file')
+                    lambda rec: rec.name == name and rec.method == 'report' and rec.report_response_type == 'file')
             if record_id:
                 ids = [int(i) for i in record_id.split(',')]
             else:
@@ -66,6 +69,9 @@ class RestAPICustomController(http.Controller):
             return res
         try:
             get_api = request.env['odoo.connect.api'].search([('name', '=', api_name)])
+            if not get_api.is_published:
+                res['error'] = 'API is not available now'
+                return res
             result = get_api.api_line_ids.filtered(lambda rec: rec.name == name and rec.method == method.lower())
         except Exception as e:
             res['error'] = 'API does not exist: %s' % str(e)
@@ -93,8 +99,11 @@ class RestAPICustomController(http.Controller):
         }
         try:
             get_api = request.env['odoo.connect.api'].search([('name', '=', api_name)])
+            if not get_api.is_published:
+                res['error'] = 'API is not available now'
+                return res
             result = get_api.api_line_ids.filtered(
-                lambda rec: rec.name == name and rec.method == 'report' and rec.report_response_type == 'url')
+                    lambda rec: rec.name == name and rec.method == 'report' and rec.report_response_type == 'url')
             if record_id:
                 ids = [int(i) for i in record_id.split(',')]
             else:
@@ -114,18 +123,22 @@ class RestAPICustomController(http.Controller):
         return res
 
     @http.route('/documentation/<int:api_id>', website=True, auth='user', methods=['GET'])
-    def index(self, api_id):
+    def index(self, api_id, token=None, **kwargs):
         res = {
             'success': False,
             'error': ''
         }
         try:
             api = request.env['odoo.connect.api'].browse(api_id)
+            if not api.is_published and not token == request.session['token']:
+                res['error'] = 'API is not available now'
+                return '''<h2>API is not available<h2/>'''
             if not api:
                 request.redirect('/')
         except Exception as e:
             res['error'] = 'Error accrued when fetching data %s' % str(e)
             return res
+        request.session['token'] = None
         return request.render('odoo_connect.documentation', {
             "api": api,
             "host_url": request.httprequest.host_url
@@ -137,6 +150,7 @@ class RestAPICustomController(http.Controller):
         report = request.env['ir.actions.report']._get_report_from_name(report_name)
         context = dict(request.env.context)
         get_api = request.env['odoo.connect.api'].search([('name', '=', api_name)])
+        
         api_line = get_api.api_line_ids.filtered(
             lambda rec: rec.name == name)
         data = report.with_context(context)._render_xlsx(report_name, api_line.id, None)[0]
